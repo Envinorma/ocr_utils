@@ -22,7 +22,7 @@ jobs:
         pip install .[test]
     - name: Test with pytest
       run: |
-        pytest ocr_utils/tests/
+        pytest ocr_utils/tests/ --ignore=setup.py
     - name: Upload codecov
       uses: codecov/codecov-action@v1
 
