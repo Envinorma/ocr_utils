@@ -1,0 +1,29 @@
+ocr\_utils package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   ocr_utils.bin
+
+Submodules
+----------
+
+ocr\_utils.example module
+-------------------------
+
+.. automodule:: ocr_utils.example
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: ocr_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
