@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>ocr_utils &mdash; OCR utils 0.0.0 documentation</title>
+  <title>ocr_utils &mdash; OCR utils 0.0.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.0
+                0.0.1
               </div>
             
           
@@ -96,12 +96,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../modules.html">Package modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../ocr_utils.html">ocr_utils package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../ocr_utils.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../ocr_utils.bin.html">ocr_utils.bin package</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="../ocr_utils.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../ocr_utils.html#module-ocr_utils.example">ocr_utils.example module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ocr_utils.html#module-ocr_utils.alto_to_svg">ocr_utils.alto_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ocr_utils.html#module-ocr_utils.pdf_to_svg">ocr_utils.pdf_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../ocr_utils.html#module-ocr_utils.table">ocr_utils.table module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../ocr_utils.html#module-ocr_utils">Module contents</a></li>
 </ul>
 </li>
@@ -186,14 +184,26 @@
 <span class="n">__email__</span> <span class="o">=</span> <span class="s2">&quot;remi.delbouys@laposte.net&quot;</span>
 <span class="c1"># Do not edit this string manually, always use bumpversion</span>
 <span class="c1"># Details in CONTRIBUTING.md</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.0.0&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.0.1&quot;</span>
 
 
 <div class="viewcode-block" id="get_module_version"><a class="viewcode-back" href="../ocr_utils.html#ocr_utils.get_module_version">[docs]</a><span class="k">def</span> <span class="nf">get_module_version</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">__version__</span></div>
 
 
-<span class="kn">from</span> <span class="nn">.example</span> <span class="kn">import</span> <span class="n">Example</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">from</span> <span class="nn">.alto_to_svg</span> <span class="kn">import</span> <span class="n">alto_pages_and_cells_to_svg</span><span class="p">,</span> <span class="n">alto_to_svg</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">from</span> <span class="nn">.pdf_to_svg</span> <span class="kn">import</span> <span class="n">pdf_to_svg</span>  <span class="c1"># noqa: F401</span>
+<span class="kn">from</span> <span class="nn">.table</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># noqa: F401</span>
+    <span class="n">Cell</span><span class="p">,</span>
+    <span class="n">LocatedTable</span><span class="p">,</span>
+    <span class="n">Row</span><span class="p">,</span>
+    <span class="n">Table</span><span class="p">,</span>
+    <span class="n">extract_and_hide_cells</span><span class="p">,</span>
+    <span class="n">extract_and_hide_tables</span><span class="p">,</span>
+    <span class="n">extract_and_hide_tables_from_image</span><span class="p">,</span>
+    <span class="n">extract_tables</span><span class="p">,</span>
+    <span class="n">extract_tables_from_image</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 
            </div>

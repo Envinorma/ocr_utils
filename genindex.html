@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Index &mdash; OCR utils 0.0.0 documentation</title>
+  <title>Index &mdash; OCR utils 0.0.1 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.0
+                0.0.1
               </div>
             
           
@@ -96,12 +96,10 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Package modules</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ocr_utils.html">ocr_utils package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#subpackages">Subpackages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="ocr_utils.bin.html">ocr_utils.bin package</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#module-ocr_utils.example">ocr_utils.example module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#module-ocr_utils.alto_to_svg">ocr_utils.alto_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#module-ocr_utils.pdf_to_svg">ocr_utils.pdf_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#module-ocr_utils.table">ocr_utils.table module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#module-ocr_utils">Module contents</a></li>
 </ul>
 </li>
@@ -182,19 +180,56 @@
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#O"><strong>O</strong></a>
- | <a href="#U"><strong>U</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#T"><strong>T</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#X"><strong>X</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
  
 </div>
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="ocr_utils.bin.html#ocr_utils.bin.my_example.Args">Args (class in ocr_utils.bin.my_example)</a>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.alto_pages_and_cells_to_svg">alto_pages_and_cells_to_svg() (in module ocr_utils.alto_to_svg)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.alto_to_svg">alto_to_svg() (in module ocr_utils.alto_to_svg)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.Cell">Cell (class in ocr_utils.table)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.Row.cells">cells (ocr_utils.table.Row attribute)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.Cell.colspan">colspan (ocr_utils.table.Cell attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.Text.content">content (ocr_utils.alto_to_svg.Text attribute)</a>
+
+      <ul>
+        <li><a href="ocr_utils.html#ocr_utils.table.Cell.content">(ocr_utils.table.Cell attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="ocr_utils.html#ocr_utils.table.Contour">Contour (class in ocr_utils.table)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.DetectedCell.contour">contour (ocr_utils.table.DetectedCell attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -202,11 +237,7 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="ocr_utils.bin.html#ocr_utils.bin.my_example.Args.DEFAULT_FIRST">DEFAULT_FIRST (ocr_utils.bin.my_example.Args attribute)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="ocr_utils.bin.html#ocr_utils.bin.my_example.Args.DEFAULT_SECOND">DEFAULT_SECOND (ocr_utils.bin.my_example.Args attribute)</a>
+      <li><a href="ocr_utils.html#ocr_utils.table.DetectedCell">DetectedCell (class in ocr_utils.table)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -214,8 +245,38 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="ocr_utils.html#ocr_utils.example.Example">Example (class in ocr_utils.example)</a>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.ForeignObject.elementname">elementname (ocr_utils.alto_to_svg.ForeignObject attribute)</a>
 </li>
+      <li><a href="ocr_utils.html#ocr_utils.table.extract_and_hide_cells">extract_and_hide_cells() (in module ocr_utils.table)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.extract_and_hide_tables">extract_and_hide_tables() (in module ocr_utils.table)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.extract_and_hide_tables_from_image">extract_and_hide_tables_from_image() (in module ocr_utils.table)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.extract_tables">extract_tables() (in module ocr_utils.table)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.extract_tables_from_image">extract_tables_from_image() (in module ocr_utils.table)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.ForeignObject">ForeignObject (class in ocr_utils.alto_to_svg)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.Cell.from_dict">from_dict() (ocr_utils.table.Cell class method)</a>
+
+      <ul>
+        <li><a href="ocr_utils.html#ocr_utils.table.LocatedTable.from_dict">(ocr_utils.table.LocatedTable class method)</a>
+</li>
+        <li><a href="ocr_utils.html#ocr_utils.table.Row.from_dict">(ocr_utils.table.Row class method)</a>
+</li>
+        <li><a href="ocr_utils.html#ocr_utils.table.Table.from_dict">(ocr_utils.table.Table class method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -226,9 +287,33 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="ocr_utils.html#ocr_utils.example.Example.get_previous_value">get_previous_value() (ocr_utils.example.Example method)</a>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.ForeignObject.get_xml">get_xml() (ocr_utils.alto_to_svg.ForeignObject method)</a>
 </li>
-      <li><a href="ocr_utils.html#ocr_utils.example.Example.get_value">get_value() (ocr_utils.example.Example method)</a>
+      <li><a href="ocr_utils.html#ocr_utils.table.group_by_proximity">group_by_proximity() (in module ocr_utils.table)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.LocatedTable.h_pos">h_pos (ocr_utils.table.LocatedTable attribute)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.Table.headers">headers (ocr_utils.table.Table attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.LocatedTable.height">height (ocr_utils.table.LocatedTable attribute)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.Text.hpos">hpos (ocr_utils.alto_to_svg.Text attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.LocatedTable">LocatedTable (class in ocr_utils.table)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -236,19 +321,17 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="ocr_utils.bin.html#ocr_utils.bin.my_example.main">main() (in module ocr_utils.bin.my_example)</a>
-</li>
       <li>
     module
 
       <ul>
         <li><a href="ocr_utils.html#module-ocr_utils">ocr_utils</a>
 </li>
-        <li><a href="ocr_utils.bin.html#module-ocr_utils.bin">ocr_utils.bin</a>
+        <li><a href="ocr_utils.html#module-ocr_utils.alto_to_svg">ocr_utils.alto_to_svg</a>
 </li>
-        <li><a href="ocr_utils.bin.html#module-ocr_utils.bin.my_example">ocr_utils.bin.my_example</a>
+        <li><a href="ocr_utils.html#module-ocr_utils.pdf_to_svg">ocr_utils.pdf_to_svg</a>
 </li>
-        <li><a href="ocr_utils.html#module-ocr_utils.example">ocr_utils.example</a>
+        <li><a href="ocr_utils.html#module-ocr_utils.table">ocr_utils.table</a>
 </li>
       </ul></li>
   </ul></td>
@@ -265,43 +348,115 @@
 </li>
       </ul></li>
       <li>
-    ocr_utils.bin
+    ocr_utils.alto_to_svg
 
       <ul>
-        <li><a href="ocr_utils.bin.html#module-ocr_utils.bin">module</a>
+        <li><a href="ocr_utils.html#module-ocr_utils.alto_to_svg">module</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li>
-    ocr_utils.bin.my_example
+    ocr_utils.pdf_to_svg
 
       <ul>
-        <li><a href="ocr_utils.bin.html#module-ocr_utils.bin.my_example">module</a>
+        <li><a href="ocr_utils.html#module-ocr_utils.pdf_to_svg">module</a>
 </li>
       </ul></li>
       <li>
-    ocr_utils.example
+    ocr_utils.table
 
       <ul>
-        <li><a href="ocr_utils.html#module-ocr_utils.example">module</a>
+        <li><a href="ocr_utils.html#module-ocr_utils.table">module</a>
 </li>
       </ul></li>
   </ul></td>
 </tr></table>
 
-<h2 id="U">U</h2>
+<h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="ocr_utils.html#ocr_utils.example.Example.update_value">update_value() (ocr_utils.example.Example method)</a>
+      <li><a href="ocr_utils.html#ocr_utils.pdf_to_svg.pdf_to_svg">pdf_to_svg() (in module ocr_utils.pdf_to_svg)</a>
 </li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.Row">Row (class in ocr_utils.table)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.Table.rows">rows (ocr_utils.table.Table attribute)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.Cell.rowspan">rowspan (ocr_utils.table.Cell attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.Table">Table (class in ocr_utils.table)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.LocatedTable.table">table (ocr_utils.table.LocatedTable attribute)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.Text">Text (class in ocr_utils.alto_to_svg)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.DetectedCell.text">text (ocr_utils.table.DetectedCell attribute)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.table.LocatedTable.to_dict">to_dict() (ocr_utils.table.LocatedTable method)</a>
+
+      <ul>
+        <li><a href="ocr_utils.html#ocr_utils.table.Table.to_dict">(ocr_utils.table.Table method)</a>
+</li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="ocr_utils.html#ocr_utils.example.Example.values">values() (ocr_utils.example.Example property)</a>
+      <li><a href="ocr_utils.html#ocr_utils.table.LocatedTable.v_pos">v_pos (ocr_utils.table.LocatedTable attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.Text.vpos">vpos (ocr_utils.alto_to_svg.Text attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.LocatedTable.width">width (ocr_utils.table.LocatedTable attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="X">X</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.Contour.x_0">x_0 (ocr_utils.table.Contour attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.Contour.x_1">x_1 (ocr_utils.table.Contour attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.Contour.y_0">y_0 (ocr_utils.table.Contour attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.Contour.y_1">y_1 (ocr_utils.table.Contour attribute)</a>
 </li>
   </ul></td>
 </tr></table>

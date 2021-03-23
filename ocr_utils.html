@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>ocr_utils package &mdash; OCR utils 0.0.0 documentation</title>
+  <title>ocr_utils package &mdash; OCR utils 0.0.1 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ocr_utils.bin package" href="ocr_utils.bin.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
     <link rel="prev" title="ocr_utils" href="modules.html" /> 
 </head>
 
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.0.0
+                0.0.1
               </div>
             
           
@@ -98,12 +98,10 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">Package modules</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">ocr_utils package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="ocr_utils.bin.html">ocr_utils.bin package</a></li>
-</ul>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-ocr_utils.example">ocr_utils.example module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ocr_utils.alto_to_svg">ocr_utils.alto_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ocr_utils.pdf_to_svg">ocr_utils.pdf_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ocr_utils.table">ocr_utils.table module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-ocr_utils">Module contents</a></li>
 </ul>
 </li>
@@ -180,7 +178,7 @@
   
   <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
       
-        <a href="ocr_utils.bin.html" class="btn btn-neutral float-right" title="ocr_utils.bin package" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
       
       
         <a href="modules.html" class="btn btn-neutral float-left" title="ocr_utils" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
@@ -194,97 +192,386 @@
             
   <div class="section" id="ocr-utils-package">
 <h1>ocr_utils package<a class="headerlink" href="#ocr-utils-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="ocr_utils.bin.html">ocr_utils.bin package</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ocr_utils.bin.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ocr_utils.bin.html#module-ocr_utils.bin.my_example">ocr_utils.bin.my_example module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ocr_utils.bin.html#module-ocr_utils.bin">Module contents</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-ocr_utils.example">
-<span id="ocr-utils-example-module"></span><h2>ocr_utils.example module<a class="headerlink" href="#module-ocr_utils.example" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-ocr_utils.alto_to_svg">
+<span id="ocr-utils-alto-to-svg-module"></span><h2>ocr_utils.alto_to_svg module<a class="headerlink" href="#module-ocr_utils.alto_to_svg" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="ocr_utils.example.Example">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.example.</span></code><code class="sig-name descname"><span class="pre">Example</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">init_value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/example.html#Example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.example.Example" title="Permalink to this definition">¶</a></dt>
+<dt id="ocr_utils.alto_to_svg.ForeignObject">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.alto_to_svg.</span></code><code class="sig-name descname"><span class="pre">ForeignObject</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#ForeignObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.ForeignObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">svgwrite.base.BaseElement</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>extra</strong> – <p>extra SVG attributes (keyword arguments)</p>
+<ul class="simple">
+<li><p>add trailing ‘_’ to reserved keywords: <code class="docutils literal notranslate"><span class="pre">'class_'</span></code>, <code class="docutils literal notranslate"><span class="pre">'from_'</span></code></p></li>
+<li><p>replace inner ‘-‘ by ‘_’: <code class="docutils literal notranslate"><span class="pre">'stroke_width'</span></code></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p>SVG attribute names will be checked, if <strong>debug</strong> is <cite>True</cite>.</p>
+<p>workaround for removed <strong>attribs</strong> parameter in Version 0.2.2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># replace</span>
+<span class="n">element</span> <span class="o">=</span> <span class="n">BaseElement</span><span class="p">(</span><span class="n">attribs</span><span class="o">=</span><span class="n">adict</span><span class="p">)</span>
+
+<span class="c1">#by</span>
+<span class="n">element</span> <span class="o">=</span> <span class="n">BaseElement</span><span class="p">()</span>
+<span class="n">element</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">adict</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt id="ocr_utils.alto_to_svg.ForeignObject.elementname">
+<code class="sig-name descname"><span class="pre">elementname</span></code><em class="property"> <span class="pre">=</span> <span class="pre">'foreignObject'</span></em><a class="headerlink" href="#ocr_utils.alto_to_svg.ForeignObject.elementname" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ocr_utils.alto_to_svg.ForeignObject.get_xml">
+<code class="sig-name descname"><span class="pre">get_xml</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#ForeignObject.get_xml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.ForeignObject.get_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the XML representation as <cite>ElementTree</cite> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>XML <cite>ElementTree</cite> of this object and all its subelements</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ocr_utils.alto_to_svg.Text">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.alto_to_svg.</span></code><code class="sig-name descname"><span class="pre">Text</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hpos</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vpos</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#Text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.Text" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>This is an example object. Use this example for ideas on how to write doc strings,
-use logging, construct objects. This is not an exhaustive example but a decent
-start.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>init_value</strong> (<em>int</em>) – An integer value to initialize the object with.</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt id="ocr_utils.example.Example.get_previous_value">
-<code class="sig-name descname"><span class="pre">get_previous_value</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/ocr_utils/example.html#Example.get_previous_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.example.Example.get_previous_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the previous value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>previous_value</strong> – The previous value stored in the object.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>int</p>
-</dd>
-</dl>
+<dl class="py attribute">
+<dt id="ocr_utils.alto_to_svg.Text.content">
+<code class="sig-name descname"><span class="pre">content</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#ocr_utils.alto_to_svg.Text.content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.alto_to_svg.Text.hpos">
+<code class="sig-name descname"><span class="pre">hpos</span></code><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#ocr_utils.alto_to_svg.Text.hpos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.alto_to_svg.Text.vpos">
+<code class="sig-name descname"><span class="pre">vpos</span></code><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#ocr_utils.alto_to_svg.Text.vpos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
-<dl class="py method">
-<dt id="ocr_utils.example.Example.get_value">
-<code class="sig-name descname"><span class="pre">get_value</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/ocr_utils/example.html#Example.get_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.example.Example.get_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the current value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>current_value</strong> – The current value stored in the object.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="ocr_utils.example.Example.update_value">
-<code class="sig-name descname"><span class="pre">update_value</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">int</span><a class="reference internal" href="_modules/ocr_utils/example.html#Example.update_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.example.Example.update_value" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save old value and set new value.</p>
+<dl class="py function">
+<dt id="ocr_utils.alto_to_svg.alto_pages_and_cells_to_svg">
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.alto_to_svg.</span></code><code class="sig-name descname"><span class="pre">alto_pages_and_cells_to_svg</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alto_xml_strings</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pages_cells</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.DetectedCell" title="ocr_utils.table.DetectedCell"><span class="pre">ocr_utils.table.DetectedCell</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">svgwrite.drawing.Drawing</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#alto_pages_and_cells_to_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.alto_pages_and_cells_to_svg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates an SVG image made of concatenated pages from alto xml files and table cells</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>new_value</strong> (<em>int</em>) – The new value to assign to the object.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alto_xml_strings</strong> – alto xml strings</p></li>
+<li><p><strong>pages_cells</strong> – detected cells on each page</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><strong>old_value</strong> – The previous value stored in the object.</p>
+<dd class="field-even"><p>svg, can be written to file with saveas method</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p>svgwrite.Drawing</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py function">
+<dt id="ocr_utils.alto_to_svg.alto_to_svg">
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.alto_to_svg.</span></code><code class="sig-name descname"><span class="pre">alto_to_svg</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#alto_to_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.alto_to_svg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads alto xml file and generates an SVG image made of concatenated pages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_filename</strong> (<em>str</em>) – Path of the XML alto file</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em>) – Path of the output SVG image</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-ocr_utils.pdf_to_svg">
+<span id="ocr-utils-pdf-to-svg-module"></span><h2>ocr_utils.pdf_to_svg module<a class="headerlink" href="#module-ocr_utils.pdf_to_svg" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="ocr_utils.pdf_to_svg.pdf_to_svg">
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.pdf_to_svg.</span></code><code class="sig-name descname"><span class="pre">pdf_to_svg</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detect_tables</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lang</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/ocr_utils/pdf_to_svg.html#pdf_to_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.pdf_to_svg.pdf_to_svg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-ocr_utils.table">
+<span id="ocr-utils-table-module"></span><h2>ocr_utils.table module<a class="headerlink" href="#module-ocr_utils.table" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="ocr_utils.table.Cell">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">Cell</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">~</span> <span class="pre">T</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colspan</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rowspan</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/table.html#Cell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.Cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ocr_utils.table.T</span></code>]</p>
+<dl class="py attribute">
+<dt id="ocr_utils.table.Cell.colspan">
+<code class="sig-name descname"><span class="pre">colspan</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#ocr_utils.table.Cell.colspan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.Cell.content">
+<code class="sig-name descname"><span class="pre">content</span></code><em class="property"><span class="pre">:</span> <span class="pre">T</span></em><a class="headerlink" href="#ocr_utils.table.Cell.content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
-<dt id="ocr_utils.example.Example.values">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">values</span></code><a class="headerlink" href="#ocr_utils.example.Example.values" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get both values stored in the object as a tuple of integers.</p>
+<dt id="ocr_utils.table.Cell.from_dict">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#ocr_utils.table.Cell" title="ocr_utils.table.Cell"><span class="pre">ocr_utils.table.Cell</span></a><a class="reference internal" href="_modules/ocr_utils/table.html#Cell.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.Cell.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.Cell.rowspan">
+<code class="sig-name descname"><span class="pre">rowspan</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#ocr_utils.table.Cell.rowspan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ocr_utils.table.Contour">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">Contour</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_0</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_1</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_0</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_1</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/table.html#Contour"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.Contour" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="ocr_utils.table.Contour.x_0">
+<code class="sig-name descname"><span class="pre">x_0</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#ocr_utils.table.Contour.x_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.Contour.x_1">
+<code class="sig-name descname"><span class="pre">x_1</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#ocr_utils.table.Contour.x_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.Contour.y_0">
+<code class="sig-name descname"><span class="pre">y_0</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#ocr_utils.table.Contour.y_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.Contour.y_1">
+<code class="sig-name descname"><span class="pre">y_1</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#ocr_utils.table.Contour.y_1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ocr_utils.table.DetectedCell">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">DetectedCell</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contour</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ocr_utils.table.Contour" title="ocr_utils.table.Contour"><span class="pre">ocr_utils.table.Contour</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/table.html#DetectedCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.DetectedCell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="ocr_utils.table.DetectedCell.contour">
+<code class="sig-name descname"><span class="pre">contour</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#ocr_utils.table.Contour" title="ocr_utils.table.Contour"><span class="pre">ocr_utils.table.Contour</span></a></em><a class="headerlink" href="#ocr_utils.table.DetectedCell.contour" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.DetectedCell.text">
+<code class="sig-name descname"><span class="pre">text</span></code><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#ocr_utils.table.DetectedCell.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ocr_utils.table.LocatedTable">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">LocatedTable</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">table</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">ocr_utils.table.Table[~</span> <span class="pre">T]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_pos</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_pos</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/table.html#LocatedTable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.LocatedTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ocr_utils.table.T</span></code>]</p>
+<dl class="py method">
+<dt id="ocr_utils.table.LocatedTable.from_dict">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#ocr_utils.table.LocatedTable" title="ocr_utils.table.LocatedTable"><span class="pre">ocr_utils.table.LocatedTable</span></a><a class="reference internal" href="_modules/ocr_utils/table.html#LocatedTable.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.LocatedTable.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.LocatedTable.h_pos">
+<code class="sig-name descname"><span class="pre">h_pos</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#ocr_utils.table.LocatedTable.h_pos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.LocatedTable.height">
+<code class="sig-name descname"><span class="pre">height</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#ocr_utils.table.LocatedTable.height" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.LocatedTable.table">
+<code class="sig-name descname"><span class="pre">table</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#ocr_utils.table.Table" title="ocr_utils.table.Table"><span class="pre">ocr_utils.table.Table</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ocr_utils.table.LocatedTable.table" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ocr_utils.table.LocatedTable.to_dict">
+<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/ocr_utils/table.html#LocatedTable.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.LocatedTable.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.LocatedTable.v_pos">
+<code class="sig-name descname"><span class="pre">v_pos</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#ocr_utils.table.LocatedTable.v_pos" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.LocatedTable.width">
+<code class="sig-name descname"><span class="pre">width</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#ocr_utils.table.LocatedTable.width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ocr_utils.table.Row">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">Row</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cells</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List[ocr_utils.table.Cell[~</span> <span class="pre">T]]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/table.html#Row"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.Row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ocr_utils.table.T</span></code>]</p>
+<dl class="py attribute">
+<dt id="ocr_utils.table.Row.cells">
+<code class="sig-name descname"><span class="pre">cells</span></code><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.Cell" title="ocr_utils.table.Cell"><span class="pre">ocr_utils.table.Cell</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ocr_utils.table.Row.cells" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ocr_utils.table.Row.from_dict">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#ocr_utils.table.Row" title="ocr_utils.table.Row"><span class="pre">ocr_utils.table.Row</span></a><a class="reference internal" href="_modules/ocr_utils/table.html#Row.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.Row.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ocr_utils.table.Table">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">Table</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">headers</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List[ocr_utils.table.Row[~</span> <span class="pre">T]]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List[ocr_utils.table.Row[~</span> <span class="pre">T]]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/table.html#Table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.Table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">ocr_utils.table.T</span></code>]</p>
+<dl class="py method">
+<dt id="ocr_utils.table.Table.from_dict">
+<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">from_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict_</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factory</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#ocr_utils.table.Table" title="ocr_utils.table.Table"><span class="pre">ocr_utils.table.Table</span></a><a class="reference internal" href="_modules/ocr_utils/table.html#Table.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.Table.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.Table.headers">
+<code class="sig-name descname"><span class="pre">headers</span></code><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.Row" title="ocr_utils.table.Row"><span class="pre">ocr_utils.table.Row</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ocr_utils.table.Table.headers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.Table.rows">
+<code class="sig-name descname"><span class="pre">rows</span></code><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.Row" title="ocr_utils.table.Row"><span class="pre">ocr_utils.table.Row</span></a><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ocr_utils.table.Table.rows" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ocr_utils.table.Table.to_dict">
+<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/ocr_utils/table.html#Table.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.Table.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="ocr_utils.table.extract_and_hide_cells">
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">extract_and_hide_cells</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lang</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.DetectedCell" title="ocr_utils.table.DetectedCell"><span class="pre">ocr_utils.table.DetectedCell</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/ocr_utils/table.html#extract_and_hide_cells"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.extract_and_hide_cells" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detects cells
+Returns all detected cells with their parsed content
+Saves image with detected cells covered by a blank rectangle
+(using opencv for structure detection and pytesseract for cell content detection)</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><strong>values</strong> – The current and old values stored in a tuple in (current_value, old_value)
-order.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_filename</strong> (<em>str</em>) – Path of the input image.</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em>) – Location of the output image (input image with detected tables covered by blank rectangle).</p></li>
+<li><p><strong>lang</strong> (<em>str</em>) – Lang to use when performing OCR.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>Tuple[int]</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>cells</strong> – List of detected cells</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[DetectedCells]</p>
 </dd>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt id="ocr_utils.table.extract_and_hide_tables">
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">extract_and_hide_tables</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lang</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.LocatedTable" title="ocr_utils.table.LocatedTable"><span class="pre">ocr_utils.table.LocatedTable</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/ocr_utils/table.html#extract_and_hide_tables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.extract_and_hide_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detects and returns tables in image
+Save image with detected tables covered by a blank rectangle
+(using opencv for structure detection and pytesseract for cell content detection)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_filename</strong> (<em>str</em>) – Path of the input image.</p></li>
+<li><p><strong>output_filename</strong> (<em>str</em>) – Location of the output image (input image with detected tables covered by blank rectangle).</p></li>
+<li><p><strong>lang</strong> (<em>str</em>) – Lang to use when performing OCR.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>tables</strong> – List of tables with their position in the original image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#ocr_utils.table.LocatedTable" title="ocr_utils.table.LocatedTable">LocatedTable</a>]</p>
+</dd>
+</dl>
 </dd></dl>
+
+<dl class="py function">
+<dt id="ocr_utils.table.extract_and_hide_tables_from_image">
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">extract_and_hide_tables_from_image</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lang</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.LocatedTable" title="ocr_utils.table.LocatedTable"><span class="pre">ocr_utils.table.LocatedTable</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/ocr_utils/table.html#extract_and_hide_tables_from_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.extract_and_hide_tables_from_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detects and returns tables in images using opencv for structure detection
+and pytesseract for cell content detection.
+Then hides detected tables from the original image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.ndarray</em>) – Input image as an array of pixels, (output of <cite>cv2.imread(image_filename, 0)</cite>)</p></li>
+<li><p><strong>lang</strong> (<em>str</em>) – Lang to use when performing OCR</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>image</strong> (<em>np.ndarray</em>) – Output image as an array of pixels with blank rectangle over detected tables</p></li>
+<li><p><strong>tables</strong> (<em>List[LocatedTable]</em>) – List of tables with their position in the original image</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ocr_utils.table.extract_tables">
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">extract_tables</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lang</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.LocatedTable" title="ocr_utils.table.LocatedTable"><span class="pre">ocr_utils.table.LocatedTable</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/ocr_utils/table.html#extract_tables"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.extract_tables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detects and returns tables in images using opencv for structure detection
+and pytesseract for cell content detection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_filename</strong> (<em>str</em>) – Path of the input image.</p></li>
+<li><p><strong>lang</strong> (<em>str</em>) – Lang to use when performing OCR.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>tables</strong> – List of tables with their position in the original image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#ocr_utils.table.LocatedTable" title="ocr_utils.table.LocatedTable">LocatedTable</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ocr_utils.table.extract_tables_from_image">
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">extract_tables_from_image</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lang</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.LocatedTable" title="ocr_utils.table.LocatedTable"><span class="pre">ocr_utils.table.LocatedTable</span></a><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/ocr_utils/table.html#extract_tables_from_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.extract_tables_from_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Detects and returns tables in images using opencv for structure detection
+and pytesseract for cell content detection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>np.ndarray</em>) – Input image as an array of pixels, (output of <cite>cv2.imread(image_filename, 0)</cite>)</p></li>
+<li><p><strong>lang</strong> (<em>str</em>) – Lang to use when performing OCR</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>tables</strong> – List of tables with their position in the original image</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[<a class="reference internal" href="#ocr_utils.table.LocatedTable" title="ocr_utils.table.LocatedTable">LocatedTable</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="ocr_utils.table.group_by_proximity">
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">group_by_proximity</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elements</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">are_neighbors</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">,</span> </span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/ocr_utils/table.html#group_by_proximity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.group_by_proximity" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-ocr_utils">

@@ -1,21 +1,29 @@
 ocr\_utils package
 ==================
 
-Subpackages
------------
-
-.. toctree::
-   :maxdepth: 4
-
-   ocr_utils.bin
-
 Submodules
 ----------
 
-ocr\_utils.example module
--------------------------
+ocr\_utils.alto\_to\_svg module
+-------------------------------
 
-.. automodule:: ocr_utils.example
+.. automodule:: ocr_utils.alto_to_svg
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ocr\_utils.pdf\_to\_svg module
+------------------------------
+
+.. automodule:: ocr_utils.pdf_to_svg
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+ocr\_utils.table module
+-----------------------
+
+.. automodule:: ocr_utils.table
    :members:
    :undoc-members:
    :show-inheritance:

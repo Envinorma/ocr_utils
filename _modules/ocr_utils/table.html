@@ -1,0 +1,717 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ocr_utils.table &mdash; OCR utils 0.0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> OCR utils
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#stable-release">Stable release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#from-sources">From sources</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Package modules</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../ocr_utils.html">ocr_utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.alto_to_svg">ocr_utils.alto_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.pdf_to_svg">ocr_utils.pdf_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.table">ocr_utils.table module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#get-started">Get Started!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../contributing.html#deploying">Deploying</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">OCR utils</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../ocr_utils.html">ocr_utils</a> &raquo;</li>
+        
+      <li>ocr_utils.table</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for ocr_utils.table</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pytesseract</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Cell"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.Cell">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Cell</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
+    <span class="n">content</span><span class="p">:</span> <span class="n">T</span>
+    <span class="n">colspan</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">rowspan</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+
+<div class="viewcode-block" id="Cell.from_dict"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.Cell.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dict_</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">factory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">T</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Cell&#39;</span><span class="p">:</span>
+        <span class="n">dict_</span> <span class="o">=</span> <span class="n">dict_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">factory</span><span class="p">:</span>
+            <span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">factory</span><span class="p">(</span><span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">dict_</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Row"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.Row">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Row</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
+    <span class="n">cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Cell</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
+
+<div class="viewcode-block" id="Row.from_dict"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.Row.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dict_</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">factory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">T</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Row&#39;</span><span class="p">:</span>
+        <span class="n">dict_</span> <span class="o">=</span> <span class="n">dict_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">Cell</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;cells&#39;</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">dict_</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Table"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.Table">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Table</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
+    <span class="n">headers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Row</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
+    <span class="n">rows</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Row</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
+
+<div class="viewcode-block" id="Table.to_dict"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.Table.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Table.from_dict"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.Table.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dict_</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">factory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">T</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Table&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">Row</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;headers&#39;</span><span class="p">]],</span>
+            <span class="p">[</span><span class="n">Row</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">factory</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;rows&#39;</span><span class="p">]],</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LocatedTable"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.LocatedTable">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">LocatedTable</span><span class="p">(</span><span class="n">Generic</span><span class="p">[</span><span class="n">T</span><span class="p">]):</span>
+    <span class="n">table</span><span class="p">:</span> <span class="n">Table</span><span class="p">[</span><span class="n">T</span><span class="p">]</span>
+    <span class="n">h_pos</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">v_pos</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">height</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">width</span><span class="p">:</span> <span class="nb">int</span>
+
+<div class="viewcode-block" id="LocatedTable.to_dict"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.LocatedTable.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="n">dict_</span> <span class="o">=</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;table&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">dict_</span></div>
+
+<div class="viewcode-block" id="LocatedTable.from_dict"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.LocatedTable.from_dict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dict_</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">factory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">Dict</span><span class="p">],</span> <span class="n">T</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;LocatedTable&#39;</span><span class="p">:</span>
+        <span class="n">dict_</span> <span class="o">=</span> <span class="n">dict_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;table&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">dict_</span><span class="p">[</span><span class="s1">&#39;table&#39;</span><span class="p">],</span> <span class="n">factory</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">dict_</span><span class="p">)</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_invert_image</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">img_bin</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span><span class="p">)</span>
+    <span class="n">img_bin</span> <span class="o">=</span> <span class="mi">255</span> <span class="o">-</span> <span class="n">img_bin</span>
+    <span class="k">return</span> <span class="n">img_bin</span>
+
+
+<div class="viewcode-block" id="Contour"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.Contour">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Contour</span><span class="p">:</span>
+    <span class="n">x_0</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">x_1</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">y_0</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">y_1</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_0</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s1"> is not correct&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_0</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="s1"> is not correct&#39;</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">_build_contour</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Contour</span><span class="p">:</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">boundingRect</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">w</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">h</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_vertical_lines</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="n">kernel_len</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">300</span>
+    <span class="n">ver_kernel</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getStructuringElement</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_RECT</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">kernel_len</span><span class="p">))</span>
+    <span class="n">image_1</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">erode</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">ver_kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">dilate</span><span class="p">(</span><span class="n">image_1</span><span class="p">,</span> <span class="n">ver_kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_horizontal_lines</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="n">kernel_len</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">300</span>
+    <span class="n">hor_kernel</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getStructuringElement</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_RECT</span><span class="p">,</span> <span class="p">(</span><span class="n">kernel_len</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">image_2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">erode</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">hor_kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cv2</span><span class="o">.</span><span class="n">dilate</span><span class="p">(</span><span class="n">image_2</span><span class="p">,</span> <span class="n">hor_kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_is_empty</span><span class="p">(</span><span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="nb">abs</span><span class="p">(</span><span class="n">contour</span><span class="o">.</span><span class="n">x_0</span> <span class="o">-</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">_PROXIMITY_THRESHOLD</span>
+        <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="n">contour</span><span class="o">.</span><span class="n">y_0</span> <span class="o">-</span> <span class="n">contour</span><span class="o">.</span><span class="n">y_1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">_PROXIMITY_THRESHOLD</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_contours</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Contour</span><span class="p">]:</span>
+    <span class="n">img_bin</span> <span class="o">=</span> <span class="n">_invert_image</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">img_vh</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">addWeighted</span><span class="p">(</span><span class="n">_get_vertical_lines</span><span class="p">(</span><span class="n">img_bin</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">_get_horizontal_lines</span><span class="p">(</span><span class="n">img_bin</span><span class="p">),</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+    <span class="n">kernel</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">getStructuringElement</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">MORPH_RECT</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">img_vh_2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">erode</span><span class="p">(</span><span class="o">~</span><span class="n">img_vh</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">img_vh_3</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">img_vh_2</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_BINARY</span> <span class="o">|</span> <span class="n">cv2</span><span class="o">.</span><span class="n">THRESH_OTSU</span><span class="p">)</span>
+    <span class="n">contours</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findContours</span><span class="p">(</span><span class="n">img_vh_3</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">RETR_TREE</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">CHAIN_APPROX_SIMPLE</span><span class="p">)</span>
+    <span class="n">built_contours</span> <span class="o">=</span> <span class="p">[</span><span class="n">_build_contour</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span> <span class="k">for</span> <span class="n">contour</span> <span class="ow">in</span> <span class="n">contours</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">ct</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">built_contours</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_empty</span><span class="p">(</span><span class="n">ct</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">_is_full_page</span><span class="p">(</span><span class="n">ct</span><span class="p">,</span> <span class="n">img</span><span class="p">)]</span>
+
+
+<div class="viewcode-block" id="DetectedCell"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.DetectedCell">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">DetectedCell</span><span class="p">:</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span></div>
+
+
+<span class="k">def</span> <span class="nf">_str</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">text</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_string</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_str</span><span class="p">(</span><span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">contour</span><span class="o">.</span><span class="n">y_0</span> <span class="p">:</span> <span class="n">contour</span><span class="o">.</span><span class="n">y_1</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_0</span> <span class="p">:</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_1</span><span class="p">],</span> <span class="n">lang</span><span class="o">=</span><span class="n">lang</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_area</span><span class="p">(</span><span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">contour</span><span class="o">.</span><span class="n">x_1</span> <span class="o">-</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">contour</span><span class="o">.</span><span class="n">y_1</span> <span class="o">-</span> <span class="n">contour</span><span class="o">.</span><span class="n">y_0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_image_area</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_is_full_page</span><span class="p">(</span><span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">,</span> <span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">_area</span><span class="p">(</span><span class="n">contour</span><span class="p">)</span> <span class="o">/</span> <span class="n">_image_area</span><span class="p">(</span><span class="n">img</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="mf">0.95</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_cells</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">]:</span>
+    <span class="n">contours</span> <span class="o">=</span> <span class="n">_extract_contours</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+    <span class="n">strings</span> <span class="o">=</span> <span class="p">[</span><span class="n">_extract_string</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Parsing table cells.&#39;</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">DetectedCell</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">contour</span><span class="p">)</span> <span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">contour</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">contours</span><span class="p">))]</span>
+
+
+<span class="n">_PROXIMITY_THRESHOLD</span> <span class="o">=</span> <span class="mi">10</span>
+
+
+<span class="k">def</span> <span class="nf">_lines_are_neighbor</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">line_</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="n">x_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">line</span>
+    <span class="n">x_0_</span><span class="p">,</span> <span class="n">x_1_</span><span class="p">,</span> <span class="n">y_</span> <span class="o">=</span> <span class="n">line_</span>
+    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">_PROXIMITY_THRESHOLD</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">x_0</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">x_0_</span> <span class="o">&lt;=</span> <span class="n">x_1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">x_0</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">x_1_</span> <span class="o">&lt;=</span> <span class="n">x_1</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">x_0_</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">x_0</span> <span class="o">&lt;=</span> <span class="n">x_1_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">x_0_</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">x_1</span> <span class="o">&lt;=</span> <span class="n">x_1_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_left_line</span><span class="p">(</span><span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">contour</span><span class="o">.</span><span class="n">y_0</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">y_1</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_right_line</span><span class="p">(</span><span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">contour</span><span class="o">.</span><span class="n">y_0</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">y_1</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_upper_line</span><span class="p">(</span><span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">contour</span><span class="o">.</span><span class="n">x_0</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_1</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">y_1</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_lower_line</span><span class="p">(</span><span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">contour</span><span class="o">.</span><span class="n">x_0</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_1</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">y_0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_are_neighbor</span><span class="p">(</span><span class="n">cell</span><span class="p">:</span> <span class="n">DetectedCell</span><span class="p">,</span> <span class="n">cell_</span><span class="p">:</span> <span class="n">DetectedCell</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">any</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">_lines_are_neighbor</span><span class="p">(</span><span class="n">_left_line</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">),</span> <span class="n">_right_line</span><span class="p">(</span><span class="n">cell_</span><span class="o">.</span><span class="n">contour</span><span class="p">)),</span>
+            <span class="n">_lines_are_neighbor</span><span class="p">(</span><span class="n">_left_line</span><span class="p">(</span><span class="n">cell_</span><span class="o">.</span><span class="n">contour</span><span class="p">),</span> <span class="n">_right_line</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">)),</span>
+            <span class="n">_lines_are_neighbor</span><span class="p">(</span><span class="n">_upper_line</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">),</span> <span class="n">_lower_line</span><span class="p">(</span><span class="n">cell_</span><span class="o">.</span><span class="n">contour</span><span class="p">)),</span>
+            <span class="n">_lines_are_neighbor</span><span class="p">(</span><span class="n">_upper_line</span><span class="p">(</span><span class="n">cell_</span><span class="o">.</span><span class="n">contour</span><span class="p">),</span> <span class="n">_lower_line</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">)),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_highest_ascendant</span><span class="p">(</span><span class="n">element</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">element_to_parent</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">element_to_parent</span><span class="p">[</span><span class="n">element</span><span class="p">]</span>
+    <span class="n">previous_parent</span> <span class="o">=</span> <span class="n">element</span>
+    <span class="k">while</span> <span class="n">parent</span> <span class="o">!=</span> <span class="n">previous_parent</span><span class="p">:</span>
+        <span class="n">previous_parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="n">parent</span> <span class="o">=</span> <span class="n">element_to_parent</span><span class="p">[</span><span class="n">parent</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">parent</span>
+
+
+<span class="k">def</span> <span class="nf">_revert_dict</span><span class="p">(</span><span class="n">input_dict</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]]:</span>
+    <span class="n">group_to_elements</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">element</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">input_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">group</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group_to_elements</span><span class="p">:</span>
+            <span class="n">group_to_elements</span><span class="p">[</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">group_to_elements</span><span class="p">[</span><span class="n">group</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">group_to_elements</span>
+
+
+<span class="k">def</span> <span class="nf">_build_groups</span><span class="p">(</span><span class="n">element_to_parent</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]:</span>
+    <span class="n">element_to_group</span> <span class="o">=</span> <span class="p">{</span><span class="n">element</span><span class="p">:</span> <span class="n">_get_highest_ascendant</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">element_to_parent</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">element_to_parent</span><span class="p">}</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">_revert_dict</span><span class="p">(</span><span class="n">element_to_group</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="group_by_proximity"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.group_by_proximity">[docs]</a><span class="k">def</span> <span class="nf">group_by_proximity</span><span class="p">(</span><span class="n">elements</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">are_neighbors</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="p">],</span> <span class="nb">bool</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]]:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">elements</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">element_to_group</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">rank</span><span class="p">,</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">elements</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">rank_</span><span class="p">,</span> <span class="n">element_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">elements</span><span class="p">[:</span><span class="n">rank</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">are_neighbors</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">element_</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">rank</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">element_to_group</span><span class="p">:</span>
+                    <span class="n">element_to_group</span><span class="p">[</span><span class="n">rank</span><span class="p">]</span> <span class="o">=</span> <span class="n">rank_</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">element_to_group</span><span class="p">[</span><span class="n">_get_highest_ascendant</span><span class="p">(</span><span class="n">rank_</span><span class="p">,</span> <span class="n">element_to_group</span><span class="p">)]</span> <span class="o">=</span> <span class="n">_get_highest_ascendant</span><span class="p">(</span>
+                        <span class="n">rank</span><span class="p">,</span> <span class="n">element_to_group</span>
+                    <span class="p">)</span>
+        <span class="k">if</span> <span class="n">rank</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">element_to_group</span><span class="p">:</span>
+            <span class="n">element_to_group</span><span class="p">[</span><span class="n">rank</span><span class="p">]</span> <span class="o">=</span> <span class="n">rank</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">_build_groups</span><span class="p">(</span><span class="n">element_to_group</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="n">elements</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">group</span><span class="p">]</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">]</span></div>
+
+
+<span class="k">def</span> <span class="nf">_are_close</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">_PROXIMITY_THRESHOLD</span>
+
+
+<span class="k">def</span> <span class="nf">_mean</span><span class="p">(</span><span class="n">ints</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ints</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Cannot compute mean on empty list.&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">ints</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">ints</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_group_ints</span><span class="p">(</span><span class="n">ints</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">group_by_proximity</span><span class="p">(</span><span class="n">ints</span><span class="p">,</span> <span class="n">_are_close</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">_mean</span><span class="p">(</span><span class="n">group</span><span class="p">))</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_detect_horizontal_border_levels</span><span class="p">(</span><span class="n">cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="n">all_levels</span> <span class="o">=</span> <span class="p">[</span><span class="n">level</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">cells</span> <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="o">.</span><span class="n">y_0</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="o">.</span><span class="n">y_1</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_group_ints</span><span class="p">(</span><span class="n">all_levels</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_detect_vertical_border_levels</span><span class="p">(</span><span class="n">cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+    <span class="n">all_levels</span> <span class="o">=</span> <span class="p">[</span><span class="n">level</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">cells</span> <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="o">.</span><span class="n">x_0</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="o">.</span><span class="n">x_1</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">_group_ints</span><span class="p">(</span><span class="n">all_levels</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_assert_positive</span><span class="p">(</span><span class="n">int_</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">int_</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Int </span><span class="si">{</span><span class="n">int_</span><span class="si">}</span><span class="s1"> is not positive&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">int_</span>
+
+
+<span class="k">def</span> <span class="nf">_find_fuzzy_rank</span><span class="p">(</span><span class="n">candidate</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">borders</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">rank</span><span class="p">,</span> <span class="n">border</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">borders</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">_are_close</span><span class="p">(</span><span class="n">border</span><span class="p">,</span> <span class="n">candidate</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">rank</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;No close border was found for the candidate:</span><span class="se">\n</span><span class="s1">candidate=</span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="se">\n</span><span class="s1">borders=</span><span class="si">{</span><span class="n">borders</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_row_rank</span><span class="p">(</span><span class="n">cell_contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">,</span> <span class="n">horizontal_borders</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_find_fuzzy_rank</span><span class="p">(</span><span class="n">cell_contour</span><span class="o">.</span><span class="n">y_0</span><span class="p">,</span> <span class="n">horizontal_borders</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_col_rank</span><span class="p">(</span><span class="n">cell_contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">,</span> <span class="n">vertical_borders</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_find_fuzzy_rank</span><span class="p">(</span><span class="n">cell_contour</span><span class="o">.</span><span class="n">x_0</span><span class="p">,</span> <span class="n">vertical_borders</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_colspan</span><span class="p">(</span><span class="n">cell_contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">,</span> <span class="n">vertical_borders</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">x_0_rank</span> <span class="o">=</span> <span class="n">_find_fuzzy_rank</span><span class="p">(</span><span class="n">cell_contour</span><span class="o">.</span><span class="n">x_0</span><span class="p">,</span> <span class="n">vertical_borders</span><span class="p">)</span>
+    <span class="n">x_1_rank</span> <span class="o">=</span> <span class="n">_find_fuzzy_rank</span><span class="p">(</span><span class="n">cell_contour</span><span class="o">.</span><span class="n">x_1</span><span class="p">,</span> <span class="n">vertical_borders</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_assert_positive</span><span class="p">(</span><span class="n">x_1_rank</span> <span class="o">-</span> <span class="n">x_0_rank</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_rowspan</span><span class="p">(</span><span class="n">cell_contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">,</span> <span class="n">horizontal_borders</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">y_0_rank</span> <span class="o">=</span> <span class="n">_find_fuzzy_rank</span><span class="p">(</span><span class="n">cell_contour</span><span class="o">.</span><span class="n">y_0</span><span class="p">,</span> <span class="n">horizontal_borders</span><span class="p">)</span>
+    <span class="n">y_1_rank</span> <span class="o">=</span> <span class="n">_find_fuzzy_rank</span><span class="p">(</span><span class="n">cell_contour</span><span class="o">.</span><span class="n">y_1</span><span class="p">,</span> <span class="n">horizontal_borders</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_assert_positive</span><span class="p">(</span><span class="n">y_1_rank</span> <span class="o">-</span> <span class="n">y_0_rank</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_radius</span><span class="p">(</span><span class="n">ints</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">ints</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">ints</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_build_table</span><span class="p">(</span><span class="n">cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">LocatedTable</span><span class="p">:</span>
+    <span class="n">horizontal_borders</span> <span class="o">=</span> <span class="n">_detect_horizontal_border_levels</span><span class="p">(</span><span class="n">cells</span><span class="p">)</span>
+    <span class="n">vertical_borders</span> <span class="o">=</span> <span class="n">_detect_vertical_border_levels</span><span class="p">(</span><span class="n">cells</span><span class="p">)</span>
+    <span class="n">rows</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Cell</span><span class="p">]]]</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">horizontal_borders</span><span class="p">))]</span>
+    <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">cells</span><span class="p">:</span>
+        <span class="n">row_index</span> <span class="o">=</span> <span class="n">_extract_row_rank</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">horizontal_borders</span><span class="p">)</span>
+        <span class="n">col_index</span> <span class="o">=</span> <span class="n">_extract_col_rank</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">vertical_borders</span><span class="p">)</span>
+        <span class="n">rowspan</span> <span class="o">=</span> <span class="n">_extract_rowspan</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">horizontal_borders</span><span class="p">)</span>
+        <span class="n">colspan</span> <span class="o">=</span> <span class="n">_extract_colspan</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="p">,</span> <span class="n">vertical_borders</span><span class="p">)</span>
+        <span class="n">rows</span><span class="p">[</span><span class="n">row_index</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">col_index</span><span class="p">,</span> <span class="n">Cell</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">rowspan</span><span class="o">=</span><span class="n">rowspan</span><span class="p">,</span> <span class="n">colspan</span><span class="o">=</span><span class="n">colspan</span><span class="p">)))</span>
+    <span class="n">final_rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">Row</span><span class="p">(</span><span class="n">cells</span><span class="o">=</span><span class="p">[</span><span class="n">cell</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">cell</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span> <span class="k">if</span> <span class="n">row</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">LocatedTable</span><span class="p">(</span>
+        <span class="n">Table</span><span class="p">(</span><span class="n">headers</span><span class="o">=</span><span class="p">[],</span> <span class="n">rows</span><span class="o">=</span><span class="n">final_rows</span><span class="p">),</span>
+        <span class="n">v_pos</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">horizontal_borders</span><span class="p">),</span>
+        <span class="n">h_pos</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">vertical_borders</span><span class="p">),</span>
+        <span class="n">width</span><span class="o">=</span><span class="n">_radius</span><span class="p">(</span><span class="n">vertical_borders</span><span class="p">),</span>
+        <span class="n">height</span><span class="o">=</span><span class="n">_radius</span><span class="p">(</span><span class="n">horizontal_borders</span><span class="p">),</span>
+    <span class="p">)</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">_Rectangle</span><span class="p">:</span>
+    <span class="n">h_pos</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">v_pos</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">width</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">height</span><span class="p">:</span> <span class="nb">int</span>
+
+
+<span class="k">def</span> <span class="nf">_hide_rectangles</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">rectangles</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">_Rectangle</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">rect</span> <span class="ow">in</span> <span class="n">rectangles</span><span class="p">:</span>
+        <span class="n">cv2</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">h_pos</span><span class="p">,</span> <span class="n">rect</span><span class="o">.</span><span class="n">v_pos</span><span class="p">),</span> <span class="p">(</span><span class="n">rect</span><span class="o">.</span><span class="n">h_pos</span> <span class="o">+</span> <span class="n">rect</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">rect</span><span class="o">.</span><span class="n">v_pos</span> <span class="o">+</span> <span class="n">rect</span><span class="o">.</span><span class="n">height</span><span class="p">),</span> <span class="n">color</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span>
+
+
+<span class="k">def</span> <span class="nf">_hide_tables</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">tables</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">LocatedTable</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">rects</span> <span class="o">=</span> <span class="p">[</span><span class="n">_Rectangle</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">h_pos</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">v_pos</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">table</span><span class="o">.</span><span class="n">height</span><span class="p">)</span> <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">_hide_rectangles</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">rects</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_cell_rectangle</span><span class="p">(</span><span class="n">cell</span><span class="p">:</span> <span class="n">DetectedCell</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">_Rectangle</span><span class="p">:</span>
+    <span class="n">ct</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">contour</span>
+    <span class="k">return</span> <span class="n">_Rectangle</span><span class="p">(</span><span class="n">ct</span><span class="o">.</span><span class="n">x_0</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">y_0</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">x_1</span> <span class="o">-</span> <span class="n">ct</span><span class="o">.</span><span class="n">x_0</span><span class="p">,</span> <span class="n">ct</span><span class="o">.</span><span class="n">y_1</span> <span class="o">-</span> <span class="n">ct</span><span class="o">.</span><span class="n">y_0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_hide_cells</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="n">rects</span> <span class="o">=</span> <span class="p">[</span><span class="n">_cell_rectangle</span><span class="p">(</span><span class="n">cell</span><span class="p">)</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">cells</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">_hide_rectangles</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">rects</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_cells_and_tables</span><span class="p">(</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">hide_tables</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">LocatedTable</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">]]:</span>
+    <span class="n">cells</span> <span class="o">=</span> <span class="n">_extract_cells</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span>
+    <span class="n">grouped_cells</span> <span class="o">=</span> <span class="n">group_by_proximity</span><span class="p">(</span><span class="n">cells</span><span class="p">,</span> <span class="n">_are_neighbor</span><span class="p">)</span>
+    <span class="n">tables</span> <span class="o">=</span> <span class="p">[</span><span class="n">_build_table</span><span class="p">(</span><span class="n">group</span><span class="p">)</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">grouped_cells</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">hide_tables</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">_hide_tables</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">tables</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">image</span><span class="p">,</span> <span class="n">tables</span><span class="p">,</span> <span class="n">cells</span>
+
+
+<div class="viewcode-block" id="extract_tables_from_image"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.extract_tables_from_image">[docs]</a><span class="k">def</span> <span class="nf">extract_tables_from_image</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">LocatedTable</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Detects and returns tables in images using opencv for structure detection</span>
+<span class="sd">    and pytesseract for cell content detection</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image: np.ndarray</span>
+<span class="sd">        Input image as an array of pixels, (output of `cv2.imread(image_filename, 0)`)</span>
+<span class="sd">    lang: str</span>
+<span class="sd">        Lang to use when performing OCR</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tables: List[LocatedTable]</span>
+<span class="sd">        List of tables with their position in the original image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_extract_cells_and_tables</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="kc">False</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="extract_and_hide_tables_from_image"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.extract_and_hide_tables_from_image">[docs]</a><span class="k">def</span> <span class="nf">extract_and_hide_tables_from_image</span><span class="p">(</span><span class="n">image</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">LocatedTable</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Detects and returns tables in images using opencv for structure detection</span>
+<span class="sd">    and pytesseract for cell content detection.</span>
+<span class="sd">    Then hides detected tables from the original image.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image: np.ndarray</span>
+<span class="sd">        Input image as an array of pixels, (output of `cv2.imread(image_filename, 0)`)</span>
+<span class="sd">    lang: str</span>
+<span class="sd">        Lang to use when performing OCR</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    image: np.ndarray</span>
+<span class="sd">        Output image as an array of pixels with blank rectangle over detected tables</span>
+<span class="sd">    tables: List[LocatedTable]</span>
+<span class="sd">        List of tables with their position in the original image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_image</span><span class="p">,</span> <span class="n">tables</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_extract_cells_and_tables</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">lang</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_image</span><span class="p">,</span> <span class="n">tables</span></div>
+
+
+<div class="viewcode-block" id="extract_tables"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.extract_tables">[docs]</a><span class="k">def</span> <span class="nf">extract_tables</span><span class="p">(</span><span class="n">image_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">LocatedTable</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Detects and returns tables in images using opencv for structure detection</span>
+<span class="sd">    and pytesseract for cell content detection</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image_filename: str</span>
+<span class="sd">        Path of the input image.</span>
+<span class="sd">    lang: str</span>
+<span class="sd">        Lang to use when performing OCR.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tables: List[LocatedTable]</span>
+<span class="sd">        List of tables with their position in the original image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">image_filename</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">extract_tables_from_image</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="extract_and_hide_tables"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.extract_and_hide_tables">[docs]</a><span class="k">def</span> <span class="nf">extract_and_hide_tables</span><span class="p">(</span><span class="n">image_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">LocatedTable</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Detects and returns tables in image</span>
+<span class="sd">    Save image with detected tables covered by a blank rectangle</span>
+<span class="sd">    (using opencv for structure detection and pytesseract for cell content detection)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image_filename: str</span>
+<span class="sd">        Path of the input image.</span>
+<span class="sd">    output_filename: str</span>
+<span class="sd">        Location of the output image (input image with detected tables covered by blank rectangle).</span>
+<span class="sd">    lang: str</span>
+<span class="sd">        Lang to use when performing OCR.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tables: List[LocatedTable]</span>
+<span class="sd">        List of tables with their position in the original image</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_image</span><span class="p">,</span> <span class="n">tables</span> <span class="o">=</span> <span class="n">extract_and_hide_tables_from_image</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">image_filename</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">lang</span><span class="p">)</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> <span class="n">new_image</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">tables</span></div>
+
+
+<div class="viewcode-block" id="extract_and_hide_cells"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.extract_and_hide_cells">[docs]</a><span class="k">def</span> <span class="nf">extract_and_hide_cells</span><span class="p">(</span><span class="n">image_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Detects cells</span>
+<span class="sd">    Returns all detected cells with their parsed content</span>
+<span class="sd">    Saves image with detected cells covered by a blank rectangle</span>
+<span class="sd">    (using opencv for structure detection and pytesseract for cell content detection)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image_filename: str</span>
+<span class="sd">        Path of the input image.</span>
+<span class="sd">    output_filename: str</span>
+<span class="sd">        Location of the output image (input image with detected tables covered by blank rectangle).</span>
+<span class="sd">    lang: str</span>
+<span class="sd">        Lang to use when performing OCR.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    cells: List[DetectedCells]</span>
+<span class="sd">        List of detected cells</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">input_image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">image_filename</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">cells</span> <span class="o">=</span> <span class="n">_extract_cells</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span>
+    <span class="n">new_image</span> <span class="o">=</span> <span class="n">_hide_cells</span><span class="p">(</span><span class="n">input_image</span><span class="p">,</span> <span class="n">cells</span><span class="p">)</span>
+    <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">output_filename</span><span class="p">,</span> <span class="n">new_image</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cells</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rémi Delbouys.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
