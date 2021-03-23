@@ -28,7 +28,7 @@ def _create_rectangle(x: float, y: float, width: float, height: float) -> Drawab
 
 def _create_line(x: float, y: float, x_: float, y_: float) -> Drawable:
     def _func(drawing: Drawing) -> None:
-        drawing.add(drawing.line((x, y), (x_, y_), stroke="black"))
+        drawing.add(drawing.line((x, y), (x_, y_), stroke='black'))
 
     return _func
 
@@ -49,6 +49,7 @@ class ForeignObject(BaseElement):
         div = Element('div')
         div.text = self.text
         div.attrib['xmlns'] = 'http://www.w3.org/1999/xhtml'
+        div.attrib['class'] = 'svg-ocr'
         xml.append(div)
         xml.attrib['x'] = str(self.x)
         xml.attrib['y'] = str(self.y)
@@ -120,7 +121,7 @@ def _image_dimension(pages: List[alto.Page]) -> Tuple[int, int]:
 
 def _blank_drawing(width: int, height: int) -> Drawing:
     base = Drawing(viewBox=f'0 0 {int(width)} {int(height)}', size=(None, None), debug=False, profile='tiny')
-    base.add(base.style(content='div {font-size: 28px;}'))
+    base.add(base.style(content='.svg-ocr {font-size: 28px;}'))
     return base
 
 

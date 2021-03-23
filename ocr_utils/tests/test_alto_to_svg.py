@@ -92,20 +92,17 @@ def test_pages_and_cells_to_svg():
 
     page = alto.Page('', 20, 10, 1, 1, [])
     res = _pages_and_cells_to_svg([page], [[]])
-    assert res.attribs['height'] == '20px'
-    assert res.attribs['width'] == '10px'
+    assert res.attribs['viewBox'] == '0 0 10 20'
     assert len(res.elements) == 7
 
     page = alto.Page('', 20, 10, 1, 1, [])
     res = _pages_and_cells_to_svg([page] * 2, [[]] * 2)
-    assert res.attribs['height'] == '40px'
-    assert res.attribs['width'] == '10px'
+    assert res.attribs['viewBox'] == '0 0 10 40'
     assert len(res.elements) == 8
 
     page = alto.Page('', 20, 10, 1, 1, [])
     res = _pages_and_cells_to_svg([page] * 4, [[]] * 4)
-    assert res.attribs['height'] == '80px'
-    assert res.attribs['width'] == '10px'
+    assert res.attribs['viewBox'] == '0 0 10 80'
     assert len(res.elements) == 10
 
 
@@ -132,28 +129,24 @@ def test_pages_to_svg():
         _pages_to_svg([])
     page = alto.Page('', 10, 10, 1, 1, [])
     res = _pages_to_svg([page])
-    assert res.attribs['height'] == '10px'
-    assert res.attribs['width'] == '10px'
+    assert res.attribs['viewBox'] == '0 0 10 10'
     assert len(res.elements) == 7
 
     page = alto.Page('', 20, 10, 1, 1, [])
     res = _pages_to_svg([page])
-    assert res.attribs['height'] == '20px'
-    assert res.attribs['width'] == '10px'
+    assert res.attribs['viewBox'] == '0 0 10 20'
     assert len(res.elements) == 7
 
     page = alto.Page('', 20, 10, 1, 1, [])
     res = _pages_to_svg([page, page])
-    assert res.attribs['height'] == '40px'
-    assert res.attribs['width'] == '10px'
+    assert res.attribs['viewBox'] == '0 0 10 40'
     assert len(res.elements) == 8
 
     line = alto.TextLine('', 1, 1, 1, 1, [alto.String('', 1, 1, 1, 1, 'test', 1, [])])
     block = alto.ComposedBlock('', 1, 1, 1, 1, [alto.TextBlock('', 1, 1, 1, 1, [line])])
     page = alto.Page('', 10, 10, 1, 1, [alto.PrintSpace(1, 1, 1, 1, 1, [block])])
     res = _pages_to_svg([page])
-    assert res.attribs['height'] == '10px'
-    assert res.attribs['width'] == '10px'
+    assert res.attribs['viewBox'] == '0 0 10 10'
     assert len(res.elements) == 8
 
     with pytest.raises(AssertionError):
