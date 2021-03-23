@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Callable, List, Optional, Tuple, cast
+from typing import Callable, List, Tuple, cast
 from xml.etree.ElementTree import Element
 
 import alto

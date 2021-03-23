@@ -1,5 +1,5 @@
 from dataclasses import asdict, dataclass
-from typing import Any, Callable, Dict, Generic, IO, List, Optional, Tuple, TypeVar, Union
+from typing import Any, Callable, Dict, Generic, List, Optional, Tuple, TypeVar, Union
 
 import cv2
 import numpy as np

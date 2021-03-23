@@ -1,7 +1,7 @@
 import shutil
 import os
 import tempfile
-from typing import IO, Any, List, Optional, Tuple, Union
+from typing import IO, List, Optional, Tuple, Union
 
 import pytesseract
 from pdf2image import convert_from_path, pdfinfo_from_path
