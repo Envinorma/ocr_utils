@@ -10,7 +10,6 @@ Welcome to OCR utils's documentation!
    installation
    Package modules <modules>
    contributing
-   math
 
 .. mdinclude:: ../README.md
 
