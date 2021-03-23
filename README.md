@@ -26,6 +26,16 @@ pdf_to_svg(
 )
 ```
 
+## Execution example
+
+### Input pdf
+
+![Input pdf](ocr_utils/tests/data/example_with_table.png)
+
+### Output svg
+
+![Output svg](ocr_utils/tests/data/example_with_table_out/detect_tables_true.svg)
+
 ## Installation
 
 **Stable Release:** `pip install ocr_utils`<br>

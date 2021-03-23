@@ -13,14 +13,16 @@ def get_module_version():
     return __version__
 
 
-from .alto_to_svg import alto_to_svg  # noqa: F401
+from .alto_to_svg import alto_pages_and_cells_to_svg, alto_to_svg  # noqa: F401
+from .pdf_to_svg import pdf_to_svg  # noqa: F401
 from .table import (  # noqa: F401
-    LocatedTable,
-    Table,
-    Row,
     Cell,
+    LocatedTable,
+    Row,
+    Table,
+    extract_and_hide_cells,
     extract_and_hide_tables,
-    extract_tables,
     extract_and_hide_tables_from_image,
+    extract_tables,
     extract_tables_from_image,
 )

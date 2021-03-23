@@ -31,6 +31,22 @@ from ocr_utils.table import (
 )
 
 
+def test_to_dict():
+    a = LocatedTable(Table([Row([Cell('')])], [Row([Cell('')])]), 1, 1, 1, 1)
+    assert a == a.from_dict(a.to_dict())
+
+    a = LocatedTable(Table([Row([Cell(1)])], [Row([Cell(3, 3)])]), 1, 1, 1, 1)
+    assert a == a.from_dict(a.to_dict())
+
+    # Table[Table[Any]], no factory
+    a = LocatedTable(Table([], [Row([Cell(Table([], []))])]), 1, 1, 1, 1)
+    assert a != a.from_dict(a.to_dict())
+
+    # Table[Table[Any]], correct factory
+    a = LocatedTable(Table([], [Row([Cell(Table([], []))])]), 1, 1, 1, 1)
+    assert a == a.from_dict(a.to_dict(), factory=Table.from_dict)
+
+
 def test_lines_are_neighbor():
     assert _lines_are_neighbor((0, 100, 1), (0, 100, 1))
     assert _lines_are_neighbor((0, 100, 1), (0, 100, 0))
@@ -183,8 +199,8 @@ def test_extract_rowspan():
 
 def test_build_table():
     cell = Cell('a', 1, 1)
-    row = Row([cell], False)
-    assert _build_table([DetectedCell('a', Contour(100, 200, 0, 100))]).table == Table([row])
+    row = Row([cell])
+    assert _build_table([DetectedCell('a', Contour(100, 200, 0, 100))]).table == Table([], [row])
 
     cells = [
         DetectedCell('a', Contour(0, 100, 0, 100)),
@@ -193,10 +209,10 @@ def test_build_table():
         DetectedCell('d', Contour(100, 200, 100, 200)),
     ]
     rows = [
-        Row([Cell('a', 1, 1), Cell('c', 1, 1)], False),
-        Row([Cell('b', 1, 1), Cell('d', 1, 1)], False),
+        Row([Cell('a', 1, 1), Cell('c', 1, 1)]),
+        Row([Cell('b', 1, 1), Cell('d', 1, 1)]),
     ]
-    assert _build_table(cells) == LocatedTable(Table(rows), 0, 0, 200, 200)
+    assert _build_table(cells) == LocatedTable(Table(headers=[], rows=rows), 0, 0, 200, 200)
 
     cells = [
         DetectedCell('a', Contour(0, 101, 0, 100)),
@@ -205,10 +221,10 @@ def test_build_table():
         DetectedCell('d', Contour(100, 200, 101, 200)),
     ]
     rows = [
-        Row([Cell('a', 1, 1), Cell('c', 1, 1)], False),
-        Row([Cell('b', 1, 1), Cell('d', 1, 1)], False),
+        Row([Cell('a', 1, 1), Cell('c', 1, 1)]),
+        Row([Cell('b', 1, 1), Cell('d', 1, 1)]),
     ]
-    assert _build_table(cells).table == Table(rows)
+    assert _build_table(cells).table == Table([], rows)
 
     cells = [
         DetectedCell('a', Contour(0, 101, 0, 100)),
@@ -216,10 +232,10 @@ def test_build_table():
         DetectedCell('c', Contour(100, 200, 3, 100)),
     ]
     rows = [
-        Row([Cell('a', 1, 1), Cell('c', 1, 1)], False),
-        Row([Cell('b', 2, 1)], False),
+        Row([Cell('a', 1, 1), Cell('c', 1, 1)]),
+        Row([Cell('b', 2, 1)]),
     ]
-    assert _build_table(cells).table == Table(rows)
+    assert _build_table(cells).table == Table([], rows)
 
 
 def test_group_cells_2():

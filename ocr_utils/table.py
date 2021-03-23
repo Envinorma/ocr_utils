@@ -1,5 +1,5 @@
 from dataclasses import asdict, dataclass
-from typing import Any, Callable, Dict, Generic, List, Optional, Tuple, TypeVar, Union
+from typing import Any, Callable, Dict, Generic, IO, List, Optional, Tuple, TypeVar, Union
 
 import cv2
 import numpy as np
@@ -26,7 +26,6 @@ class Cell(Generic[T]):
 @dataclass
 class Row(Generic[T]):
     cells: List[Cell[T]]
-    text_in_inspection_sheet: Optional[str] = None
 
     @classmethod
     def from_dict(cls, dict_: Dict, factory: Optional[Callable[[Dict], T]] = None) -> 'Row':
@@ -327,7 +326,7 @@ def _build_table(cells: List[DetectedCell]) -> LocatedTable:
         rows[row_index].append((col_index, Cell(cell.text, rowspan=rowspan, colspan=colspan)))
     final_rows = [Row(cells=[cell for _, cell in sorted(row, key=lambda x: x[0])]) for row in rows if row]
     return LocatedTable(
-        Table(rows=final_rows),
+        Table(headers=[], rows=final_rows),
         v_pos=min(horizontal_borders),
         h_pos=min(vertical_borders),
         width=_radius(vertical_borders),
@@ -335,13 +334,46 @@ def _build_table(cells: List[DetectedCell]) -> LocatedTable:
     )
 
 
-def _hide_tables(image: np.ndarray, tables: List[LocatedTable]) -> np.ndarray:
+@dataclass
+class _Rectangle:
+    h_pos: int
+    v_pos: int
+    width: int
+    height: int
+
+
+def _hide_rectangles(image: np.ndarray, rectangles: List[_Rectangle]) -> np.ndarray:
     color = (255, 255, 255)
-    for table in tables:
-        cv2.rectangle(
-            image, (table.h_pos, table.v_pos), (table.h_pos + table.width, table.v_pos + table.height), color, -1
-        )
+    image = image.copy()
+    for rect in rectangles:
+        cv2.rectangle(image, (rect.h_pos, rect.v_pos), (rect.h_pos + rect.width, rect.v_pos + rect.height), color, -1)
     return image
+
+
+def _hide_tables(image: np.ndarray, tables: List[LocatedTable]) -> np.ndarray:
+    rects = [_Rectangle(table.h_pos, table.v_pos, table.width, table.height) for table in tables]
+    return _hide_rectangles(image, rects)
+
+
+def _cell_rectangle(cell: DetectedCell) -> _Rectangle:
+    ct = cell.contour
+    return _Rectangle(ct.x_0, ct.y_0, ct.x_1 - ct.x_0, ct.y_1 - ct.y_0)
+
+
+def _hide_cells(image: np.ndarray, cells: List[DetectedCell]) -> np.ndarray:
+    rects = [_cell_rectangle(cell) for cell in cells]
+    return _hide_rectangles(image, rects)
+
+
+def _extract_cells_and_tables(
+    image: np.ndarray, lang: str, hide_tables: bool
+) -> Tuple[np.ndarray, List[LocatedTable], List[DetectedCell]]:
+    cells = _extract_cells(image, lang)
+    grouped_cells = group_by_proximity(cells, _are_neighbor)
+    tables = [_build_table(group) for group in grouped_cells]
+    if hide_tables:
+        image = _hide_tables(image, tables)
+    return image, tables, cells
 
 
 def extract_tables_from_image(image: np.ndarray, lang: str) -> List[LocatedTable]:
@@ -361,9 +393,7 @@ def extract_tables_from_image(image: np.ndarray, lang: str) -> List[LocatedTable
     tables: List[LocatedTable]
         List of tables with their position in the original image
     """
-    cells = _extract_cells(image, lang)
-    grouped_cells = group_by_proximity(cells, _are_neighbor)
-    return [_build_table(group) for group in grouped_cells]
+    return _extract_cells_and_tables(image, lang, False)[1]
 
 
 def extract_and_hide_tables_from_image(image: np.ndarray, lang: str) -> Tuple[np.ndarray, List[LocatedTable]]:
@@ -386,8 +416,8 @@ def extract_and_hide_tables_from_image(image: np.ndarray, lang: str) -> Tuple[np
     tables: List[LocatedTable]
         List of tables with their position in the original image
     """
-    tables = extract_tables_from_image(image, lang)
-    return _hide_tables(image, tables), tables
+    new_image, tables, _ = _extract_cells_and_tables(image, lang, True)
+    return new_image, tables
 
 
 def extract_tables(image_filename: str, lang: str) -> List[LocatedTable]:
@@ -413,8 +443,9 @@ def extract_tables(image_filename: str, lang: str) -> List[LocatedTable]:
 
 def extract_and_hide_tables(image_filename: str, output_filename: str, lang: str) -> List[LocatedTable]:
     """
-    Detects and returns tables in images using opencv for structure detection
-    and pytesseract for cell content detection
+    Detects and returns tables in image
+    Save image with detected tables covered by a blank rectangle
+    (using opencv for structure detection and pytesseract for cell content detection)
 
     Parameters
     ----------
@@ -433,3 +464,31 @@ def extract_and_hide_tables(image_filename: str, output_filename: str, lang: str
     new_image, tables = extract_and_hide_tables_from_image(cv2.imread(image_filename, 0), lang)
     cv2.imwrite(output_filename, new_image)
     return tables
+
+
+def extract_and_hide_cells(image_filename: str, output_filename: str, lang: str) -> List[DetectedCell]:
+    """
+    Detects cells
+    Returns all detected cells with their parsed content
+    Saves image with detected cells covered by a blank rectangle
+    (using opencv for structure detection and pytesseract for cell content detection)
+
+    Parameters
+    ----------
+    image_filename: str
+        Path of the input image.
+    output_filename: str
+        Location of the output image (input image with detected tables covered by blank rectangle).
+    lang: str
+        Lang to use when performing OCR.
+
+    Returns
+    -------
+    cells: List[DetectedCells]
+        List of detected cells
+    """
+    input_image = cv2.imread(image_filename, 0)
+    cells = _extract_cells(input_image, lang)
+    new_image = _hide_cells(input_image, cells)
+    cv2.imwrite(output_filename, new_image)
+    return cells
