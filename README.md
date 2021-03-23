@@ -30,11 +30,11 @@ pdf_to_svg(
 
 ### Input pdf
 
-![Input pdf](ocr_utils/tests/data/example_with_table.png)
+![Input pdf](example_execution/example_with_table.png)
 
 ### Output svg
 
-![Output svg](ocr_utils/tests/data/example_with_table_out/detect_tables_true.svg)
+![Output svg](example_execution/example_with_table_out/detect_tables_true.svg)
 
 ## Installation
 

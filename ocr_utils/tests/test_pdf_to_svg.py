@@ -1,8 +1,10 @@
 import os
 import tempfile
+
 import pytest
-from ocr_utils.table import Contour, DetectedCell
+
 from ocr_utils.pdf_to_svg import _unzip_ocr_outputs, pdf_to_svg
+from ocr_utils.table import Contour, DetectedCell
 
 
 def test_unzip_ocr_outputs():

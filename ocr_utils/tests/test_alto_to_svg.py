@@ -1,16 +1,14 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from collections import Counter
 from typing import Counter as CounterType
 from typing import List
 from xml.etree.ElementTree import Element
-import alto
 
+import alto
 import pytest
-from svgwrite.drawing import Drawing
 from svgwrite.container import Defs
+from svgwrite.drawing import Drawing
 from svgwrite.shapes import Line, Rect
+
 from ocr_utils.alto_to_svg import (
     Drawable,
     _alto_page_to_drawables,
@@ -18,8 +16,8 @@ from ocr_utils.alto_to_svg import (
     _create_rectangle,
     _create_text,
     _draw_elements,
-    _pages_and_cells_to_svg,
     _line_to_component,
+    _pages_and_cells_to_svg,
     _pages_to_svg,
 )
 

@@ -207,9 +207,6 @@ def _are_neighbor(cell: DetectedCell, cell_: DetectedCell) -> bool:
     )
 
 
-T = TypeVar('T')
-
-
 def _get_highest_ascendant(element: T, element_to_parent: Dict[T, T]) -> T:
     parent = element_to_parent[element]
     previous_parent = element
