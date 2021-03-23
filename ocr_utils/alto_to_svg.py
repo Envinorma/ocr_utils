@@ -119,8 +119,8 @@ def _image_dimension(pages: List[alto.Page]) -> Tuple[int, int]:
 
 
 def _blank_drawing(width: int, height: int) -> Drawing:
-    base = Drawing(profile='tiny', debug=False, size=(f'{int(width)}px', f'{int(height)}px'))
-    base.add(base.style(content='div {font-size: 25px;}'))
+    base = Drawing(viewBox=f'0 0 {int(width)} {int(height)}', size=(None, None), debug=False, profile='tiny')
+    base.add(base.style(content='div {font-size: 28px;}'))
     return base
 
 
