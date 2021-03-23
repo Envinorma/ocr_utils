@@ -77,7 +77,7 @@ setup(
     long_description_content_type="text/markdown",
     include_package_data=True,
     keywords="ocr_utils",
-    name="ocr_utils",
+    name="tesseract_ocr_utils",
     packages=find_packages(exclude=["tests", "*.tests", "*.tests.*"]),
     python_requires=">=3.7",
     setup_requires=setup_requirements,

@@ -38,7 +38,7 @@ pdf_to_svg(
 
 ## Installation
 
-**Stable Release:** `pip install ocr_utils`<br>
+**Stable Release:** `pip install tesseract_ocr_utils`<br>
 **Development Head:** `pip install git+https://github.com/envinorma/ocr_utils.git`
 
 This library is built upon [pytesseract](https://pypi.org/project/pytesseract/) and [pdf2image](https://pypi.org/project/pdf2image/) which have non-pip requirements.
