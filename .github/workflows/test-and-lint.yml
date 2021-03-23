@@ -50,4 +50,4 @@ jobs:
         flake8 ocr_utils --count --verbose --show-source --statistics
     - name: Check with black
       run: |
-        black --check ocr_utils
+        black -S -l 120 --check ocr_utils

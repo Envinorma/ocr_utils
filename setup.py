@@ -15,11 +15,13 @@ setup_requirements = [
 test_requirements = [
     "black>=19.10b0",
     "codecov>=2.1.4",
+    "isort>=5.7.0",
     "flake8>=3.8.3",
     "flake8-debugger>=3.2.1",
     "pytest>=5.4.3",
     "pytest-cov>=2.9.0",
     "pytest-raises>=0.11",
+    "pytest-mypy>=0.8.0",
     "numpy>=1.20.1",
     "opencv-python-headless>=4.5.1.48",
     "pdf2image",
