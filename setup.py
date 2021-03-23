@@ -22,13 +22,6 @@ test_requirements = [
     "pytest-cov>=2.9.0",
     "pytest-raises>=0.11",
     "pytest-mypy>=0.8.0",
-    "numpy>=1.20.1",
-    "opencv-python-headless>=4.5.1.48",
-    "pdf2image",
-    "pytesseract>=0.3.7",
-    "svgwrite>=1.4.1",
-    "alto-xml>=0.0.3",
-    "tqdm>=4.59.0",
 ]
 
 dev_requirements = [
@@ -46,7 +39,15 @@ dev_requirements = [
     "wheel>=0.34.2",
 ]
 
-requirements = []
+requirements = [
+    "numpy>=1.20.1",
+    "opencv-python-headless>=4.5.1.48",
+    "pdf2image",
+    "pytesseract>=0.3.7",
+    "svgwrite>=1.4.1",
+    "alto-xml>=0.0.3",
+    "tqdm>=4.59.0",
+]
 
 extra_requirements = {
     "setup": setup_requirements,
@@ -87,6 +88,6 @@ setup(
     url="https://github.com/envinorma/ocr_utils",
     # Do not edit this string manually, always use bumpversion
     # Details in CONTRIBUTING.rst
-    version="0.0.3",
+    version="0.0.4",
     zip_safe=False,
 )
