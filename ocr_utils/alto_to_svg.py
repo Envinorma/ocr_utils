@@ -6,6 +6,7 @@ import alto
 from svgwrite.base import BaseElement
 from svgwrite.drawing import Drawing
 
+from ocr_utils.commons import assert_one_page_and_get_it
 from ocr_utils.table import DetectedCell
 
 
@@ -14,6 +15,13 @@ class Text:
     content: str
     hpos: float
     vpos: float
+
+
+@dataclass
+class FontSize:
+    default: int
+    guess: bool
+    max_value: int
 
 
 Drawable = Callable[[Drawing], None]
@@ -58,9 +66,11 @@ class ForeignObject(BaseElement):
         return xml
 
 
-def _create_text(text: str, x: float, y: float, width: int, height: int) -> Drawable:
+def _create_text(text: str, x: int, y: int, size: int) -> Drawable:
+    assert size >= 0
+
     def _func(drawing: Drawing) -> None:
-        drawing.add(ForeignObject(text, int(x), int(y), int(width), int(height * 2)))
+        drawing.add(drawing.text(text, (x, y), font_size=size))
 
     return _func
 
@@ -80,33 +90,49 @@ def _draw_elements(drawing: Drawing, drawables: List[Drawable]) -> Drawing:
     return drawing
 
 
-def _line_to_component(v_offset: float, line: alto.TextLine) -> Drawable:
+def _extract_strings_width_sum(line: alto.TextLine) -> float:
+    return sum([str_.width for str_ in line.strings if isinstance(str_, alto.String)])
+
+
+def _guess_font_size(line: alto.TextLine) -> int:
+    strings_width = _extract_strings_width_sum(line)
+    nb_chars = sum([len(x) for x in line.extract_strings()])
+    return int(strings_width / (nb_chars or 1)) * 2
+
+
+def _line_to_component(h_offset: float, v_offset: float, line: alto.TextLine, font_size: FontSize) -> Drawable:
     content = ' '.join(line.extract_strings())
-    return _create_text(content, line.hpos, line.vpos + v_offset, int(line.width), int(line.height))
+    size = min(font_size.max_value, _guess_font_size(line)) if font_size.guess else font_size.default
+    return _create_text(content, int(line.hpos + h_offset), int(line.vpos + v_offset + size), size)
 
 
-def _alto_page_to_drawables(page_number: int, page: alto.Page) -> List[Drawable]:
-    return [_line_to_component(page.height * page_number, line) for line in page.extract_lines()]
+def _alto_page_to_drawables(page_number: int, page: alto.Page, font_size: FontSize) -> List[Drawable]:
+    return [_line_to_component(0, page.height * page_number, line, font_size) for line in page.extract_lines()]
 
 
-def _cell_to_drawable(cell: DetectedCell, offset: int) -> Drawable:
+def _cell_to_drawable(cell: DetectedCell, offset: int, font_size: FontSize) -> Drawable:
     x_0 = cell.contour.x_0
     x_1 = cell.contour.x_1
     y_0 = cell.contour.y_0 + offset
     y_1 = cell.contour.y_1 + offset
+    text_lines = [_line_to_component(x_0, y_0, line, font_size) for line in cell.lines]
     drawables = [
         _create_line(x_0, y_0, x_1, y_0),
         _create_line(x_0, y_1, x_1, y_1),
         _create_line(x_0, y_0, x_0, y_1),
         _create_line(x_1, y_0, x_1, y_1),
-        _create_text(cell.text.strip(), x_0, y_0, x_1 - x_0, y_1 - y_0),
+        *text_lines,
     ]
     return _merge_drawables(drawables)
 
 
-def _page_and_cells_to_drawables(page_number: int, page: alto.Page, cells: List[DetectedCell]) -> List[Drawable]:
+def _page_and_cells_to_drawables(
+    page_number: int, page: alto.Page, cells: List[DetectedCell], font_size: FontSize
+) -> List[Drawable]:
     offset = int(page.height * page_number)
-    return _alto_page_to_drawables(page_number, page) + [_cell_to_drawable(cell, offset) for cell in cells]
+    svg_pages = _alto_page_to_drawables(page_number, page, font_size)
+    svg_cells = [_cell_to_drawable(cell, offset, font_size) for cell in cells]
+    return svg_pages + svg_cells
 
 
 def _image_dimension(pages: List[alto.Page]) -> Tuple[int, int]:
@@ -121,7 +147,6 @@ def _image_dimension(pages: List[alto.Page]) -> Tuple[int, int]:
 
 def _blank_drawing(width: int, height: int) -> Drawing:
     base = Drawing(viewBox=f'0 0 {int(width)} {int(height)}', size=(None, None), debug=False, profile='tiny')
-    base.add(base.style(content='.svg-ocr {font-size: 28px;}'))
     return base
 
 
@@ -138,7 +163,9 @@ def _pages_borders(nb_pages: int, img_width: int, img_height: int) -> List[Drawa
     return [background] + lines
 
 
-def _pages_and_cells_to_svg(pages: List[alto.Page], pages_cells: List[List[DetectedCell]]) -> Drawing:
+def _pages_and_cells_to_svg(
+    pages: List[alto.Page], pages_cells: List[List[DetectedCell]], font_size: FontSize
+) -> Drawing:
     assert len(pages) == len(pages_cells), f'Lists have different sizes: {len(pages)} and {len(pages_cells)}'
     width, height = _image_dimension(pages)
     blank_drawing = _blank_drawing(width, height)
@@ -146,12 +173,18 @@ def _pages_and_cells_to_svg(pages: List[alto.Page], pages_cells: List[List[Detec
     elements = [
         element
         for page_number, (page, cells) in enumerate(zip(pages, pages_cells))
-        for element in _page_and_cells_to_drawables(page_number, page, cells)
+        for element in _page_and_cells_to_drawables(page_number, page, cells, font_size)
     ]
     return _draw_elements(blank_drawing, page_borders + elements)
 
 
-def alto_pages_and_cells_to_svg(alto_xml_strings: List[str], pages_cells: List[List[DetectedCell]]) -> Drawing:
+def alto_pages_and_cells_to_svg(
+    alto_xml_strings: List[str],
+    pages_cells: List[List[DetectedCell]],
+    default_font_size: int = 40,
+    guess_font_size: bool = True,
+    max_font_size: int = 50,
+) -> Drawing:
     """
     Generates an SVG image made of concatenated pages from alto xml files and table cells
 
@@ -161,31 +194,40 @@ def alto_pages_and_cells_to_svg(alto_xml_strings: List[str], pages_cells: List[L
         alto xml strings
     pages_cells
         detected cells on each page
+    default_font_size: int
+        size of font in output svg
+    guess_font_size: bool
+        if True, font size is automatically deduced from block width when possible (to handle varying font sizes)
+    max_font_size: int
+        when guess_font_size is True, maximal possible font size is set to max_font_size (to avoid huge font size
+        in edge cases)
 
     Returns
     -------
     svgwrite.Drawing
         svg, can be written to file with saveas method
     """
-    alto_pages = [_assert_one_page_and_get_it(alto.parse(xml_str)) for xml_str in alto_xml_strings]
-    return _pages_and_cells_to_svg(alto_pages, pages_cells)
+    alto_pages = [assert_one_page_and_get_it(alto.parse(xml_str)) for xml_str in alto_xml_strings]
+    font_size = FontSize(default_font_size, guess_font_size, max_font_size)
+    return _pages_and_cells_to_svg(alto_pages, pages_cells, font_size)
 
 
-def _pages_to_svg(pages: List[alto.Page]) -> Drawing:
-    return _pages_and_cells_to_svg(pages, [[]] * len(pages))
+def _pages_to_svg(pages: List[alto.Page], font_size: FontSize) -> Drawing:
+    return _pages_and_cells_to_svg(pages, [[]] * len(pages), font_size)
 
 
-def _pages_to_svg_file(pages: List[alto.Page], filename: str) -> None:
-    drawing = _pages_to_svg(pages)
+def _pages_to_svg_file(pages: List[alto.Page], filename: str, font_size: FontSize) -> None:
+    drawing = _pages_to_svg(pages, font_size)
     drawing.saveas(filename)
 
 
-def _assert_one_page_and_get_it(file_: alto.Alto) -> alto.Page:
-    assert len(file_.layout.pages) == 1, f'Expecting 1 page in alto file, got {len(file_.layout.pages)}'
-    return file_.layout.pages[0]
-
-
-def alto_to_svg(input_filename: str, output_filename: str) -> None:
+def alto_to_svg(
+    input_filename: str,
+    output_filename: str,
+    default_font_size: int = 40,
+    guess_font_size: bool = True,
+    max_font_size: int = 50,
+) -> None:
     """
     Loads alto xml file and generates an SVG image made of concatenated pages.
 
@@ -195,6 +237,14 @@ def alto_to_svg(input_filename: str, output_filename: str) -> None:
         Path of the XML alto file
     output_filename: str
         Path of the output SVG image
+    default_font_size: int
+        size of font in output svg
+    guess_font_size: bool
+        if True, font size is automatically deduced from block width when possible (to handle varying font sizes)
+    max_font_size: int
+        when guess_font_size is True, maximal possible font size is set to max_font_size (to avoid huge font size
+        in edge cases)
     """
     alto_file = alto.Alto.parse_file(input_filename)
-    _pages_to_svg_file(alto_file.layout.pages, output_filename)
+    font_size = FontSize(default_font_size, guess_font_size, max_font_size)
+    _pages_to_svg_file(alto_file.layout.pages, output_filename, font_size)

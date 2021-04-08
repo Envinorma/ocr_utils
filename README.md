@@ -22,7 +22,7 @@ pdf_to_svg(
     input_filename='in.pdf',
     output_filename='out.svg',
     detect_tables=True,
-    lang='en',
+    lang='eng',
 )
 ```
 

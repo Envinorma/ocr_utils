@@ -35,7 +35,7 @@ def _ocr_on_image_file(file: IO, detect_tables: bool, lang: str) -> _OCROutput:
 
 def _ocr_on_page(path: str, page_nb: int, detect_tables: bool, lang: str) -> _OCROutput:
     with tempfile.NamedTemporaryFile(suffix='.png') as temp_file:
-        page = convert_from_path(path, first_page=page_nb + 1, last_page=page_nb + 1)[0]
+        page = convert_from_path(path, first_page=page_nb + 1, last_page=page_nb + 1, dpi=300)[0]
         page.save(temp_file)
         return _ocr_on_image_file(temp_file, detect_tables, lang)
 

@@ -1,10 +1,13 @@
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from typing import Any, Callable, Dict, Generic, List, Optional, Tuple, TypeVar, Union
 
+import alto
 import cv2
 import numpy as np
 import pytesseract
 from tqdm import tqdm
+
+from ocr_utils.commons import assert_one_page_and_get_it
 
 T = TypeVar('T')
 
@@ -131,6 +134,11 @@ def _extract_contours(img: np.ndarray) -> List[Contour]:
 class DetectedCell:
     text: str
     contour: Contour
+    lines: List[alto.TextLine] = field(default_factory=list)
+
+    def __post_init__(self) -> None:
+        if self.lines:
+            self.text = '\n'.join([' '.join(line.extract_strings()) for line in self.lines])
 
 
 def _str(text: Union[str, bytes]) -> str:
@@ -139,8 +147,23 @@ def _str(text: Union[str, bytes]) -> str:
     return text
 
 
-def _extract_string(img, contour: Contour, lang: str) -> str:
-    return _str(pytesseract.image_to_string(img[contour.y_0 : contour.y_1, contour.x_0 : contour.x_1], lang=lang))
+def _truncate(img: np.ndarray, contour: Contour) -> np.ndarray:
+    return img[contour.y_0 : contour.y_1, contour.x_0 : contour.x_1]
+
+
+def _extract_string(img: np.ndarray, contour: Contour, lang: str) -> str:
+    return _str(pytesseract.image_to_string(_truncate(img, contour), lang=lang))
+
+
+def _decode(content: Union[str, bytes]) -> str:
+    return content.decode() if isinstance(content, bytes) else content
+
+
+def _extract_lines(img: np.ndarray, contour: Contour, lang: str) -> List[alto.TextLine]:
+    truncated_image = _truncate(img, contour)
+
+    alto_ = alto.parse(_decode(pytesseract.image_to_alto_xml(truncated_image, lang=lang)))
+    return assert_one_page_and_get_it(alto_).extract_lines()
 
 
 def _area(contour: Contour) -> float:
@@ -158,8 +181,8 @@ def _is_full_page(contour: Contour, img: np.ndarray) -> bool:
 
 def _extract_cells(img: np.ndarray, lang: str) -> List[DetectedCell]:
     contours = _extract_contours(img)
-    strings = [_extract_string(img, ct, lang) for ct in tqdm(contours, leave=False, desc='Parsing table cells.')]
-    return [DetectedCell(text, contour) for text, contour in list(zip(strings, contours))]
+    all_lines = [_extract_lines(img, ct, lang) for ct in tqdm(contours, leave=False, desc='Parsing table cells.')]
+    return [DetectedCell('', contour, lines) for lines, contour in list(zip(all_lines, contours))]
 
 
 _PROXIMITY_THRESHOLD = 10
