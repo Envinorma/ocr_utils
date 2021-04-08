@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Index &mdash; OCR utils 0.0.4 documentation</title>
+  <title>Index &mdash; OCR utils 0.0.6 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.6
               </div>
             
           
@@ -98,6 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="ocr_utils.html">ocr_utils package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#module-ocr_utils.alto_to_svg">ocr_utils.alto_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#module-ocr_utils.commons">ocr_utils.commons module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#module-ocr_utils.pdf_to_svg">ocr_utils.pdf_to_svg module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#module-ocr_utils.table">ocr_utils.table module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="ocr_utils.html#module-ocr_utils">Module contents</a></li>
@@ -207,6 +208,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.alto_to_svg">alto_to_svg() (in module ocr_utils.alto_to_svg)</a>
 </li>
+      <li><a href="ocr_utils.html#ocr_utils.commons.assert_one_page_and_get_it">assert_one_page_and_get_it() (in module ocr_utils.commons)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -237,6 +240,10 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.FontSize.default">default (ocr_utils.alto_to_svg.FontSize attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ocr_utils.html#ocr_utils.table.DetectedCell">DetectedCell (class in ocr_utils.table)</a>
 </li>
   </ul></td>
@@ -265,6 +272,8 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.FontSize">FontSize (class in ocr_utils.alto_to_svg)</a>
+</li>
       <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.ForeignObject">ForeignObject (class in ocr_utils.alto_to_svg)</a>
 </li>
       <li><a href="ocr_utils.html#ocr_utils.table.Cell.from_dict">from_dict() (ocr_utils.table.Cell class method)</a>
@@ -285,11 +294,13 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ocr_utils.html#ocr_utils.get_module_version">get_module_version() (in module ocr_utils)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.ForeignObject.get_xml">get_xml() (ocr_utils.alto_to_svg.ForeignObject method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ocr_utils.html#ocr_utils.table.group_by_proximity">group_by_proximity() (in module ocr_utils.table)</a>
+</li>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.FontSize.guess">guess (ocr_utils.alto_to_svg.FontSize attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -313,6 +324,10 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.table.DetectedCell.lines">lines (ocr_utils.table.DetectedCell attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="ocr_utils.html#ocr_utils.table.LocatedTable">LocatedTable (class in ocr_utils.table)</a>
 </li>
   </ul></td>
@@ -321,6 +336,8 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="ocr_utils.html#ocr_utils.alto_to_svg.FontSize.max_value">max_value (ocr_utils.alto_to_svg.FontSize attribute)</a>
+</li>
       <li>
     module
 
@@ -328,6 +345,8 @@
         <li><a href="ocr_utils.html#module-ocr_utils">ocr_utils</a>
 </li>
         <li><a href="ocr_utils.html#module-ocr_utils.alto_to_svg">ocr_utils.alto_to_svg</a>
+</li>
+        <li><a href="ocr_utils.html#module-ocr_utils.commons">ocr_utils.commons</a>
 </li>
         <li><a href="ocr_utils.html#module-ocr_utils.pdf_to_svg">ocr_utils.pdf_to_svg</a>
 </li>
@@ -352,6 +371,13 @@
 
       <ul>
         <li><a href="ocr_utils.html#module-ocr_utils.alto_to_svg">module</a>
+</li>
+      </ul></li>
+      <li>
+    ocr_utils.commons
+
+      <ul>
+        <li><a href="ocr_utils.html#module-ocr_utils.commons">module</a>
 </li>
       </ul></li>
   </ul></td>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>ocr_utils.alto_to_svg &mdash; OCR utils 0.0.4 documentation</title>
+  <title>ocr_utils.alto_to_svg &mdash; OCR utils 0.0.6 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.6
               </div>
             
           
@@ -98,6 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../ocr_utils.html">ocr_utils package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.alto_to_svg">ocr_utils.alto_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.commons">ocr_utils.commons module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.pdf_to_svg">ocr_utils.pdf_to_svg module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.table">ocr_utils.table module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils">Module contents</a></li>
@@ -186,6 +187,7 @@
 <span class="kn">from</span> <span class="nn">svgwrite.base</span> <span class="kn">import</span> <span class="n">BaseElement</span>
 <span class="kn">from</span> <span class="nn">svgwrite.drawing</span> <span class="kn">import</span> <span class="n">Drawing</span>
 
+<span class="kn">from</span> <span class="nn">ocr_utils.commons</span> <span class="kn">import</span> <span class="n">assert_one_page_and_get_it</span>
 <span class="kn">from</span> <span class="nn">ocr_utils.table</span> <span class="kn">import</span> <span class="n">DetectedCell</span>
 
 
@@ -194,6 +196,13 @@
     <span class="n">content</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">hpos</span><span class="p">:</span> <span class="nb">float</span>
     <span class="n">vpos</span><span class="p">:</span> <span class="nb">float</span></div>
+
+
+<div class="viewcode-block" id="FontSize"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.alto_to_svg.FontSize">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">FontSize</span><span class="p">:</span>
+    <span class="n">default</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">guess</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">max_value</span><span class="p">:</span> <span class="nb">int</span></div>
 
 
 <span class="n">Drawable</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Drawing</span><span class="p">],</span> <span class="kc">None</span><span class="p">]</span>
@@ -208,7 +217,7 @@
 
 <span class="k">def</span> <span class="nf">_create_line</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">x_</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y_</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawable</span><span class="p">:</span>
     <span class="k">def</span> <span class="nf">_func</span><span class="p">(</span><span class="n">drawing</span><span class="p">:</span> <span class="n">Drawing</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">drawing</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">drawing</span><span class="o">.</span><span class="n">line</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">y_</span><span class="p">),</span> <span class="n">stroke</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">))</span>
+        <span class="n">drawing</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">drawing</span><span class="o">.</span><span class="n">line</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">y_</span><span class="p">),</span> <span class="n">stroke</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">_func</span>
 
@@ -229,6 +238,7 @@
         <span class="n">div</span> <span class="o">=</span> <span class="n">Element</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">)</span>
         <span class="n">div</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text</span>
         <span class="n">div</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;xmlns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;http://www.w3.org/1999/xhtml&#39;</span>
+        <span class="n">div</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;svg-ocr&#39;</span>
         <span class="n">xml</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">div</span><span class="p">)</span>
         <span class="n">xml</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
         <span class="n">xml</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
@@ -237,9 +247,11 @@
         <span class="k">return</span> <span class="n">xml</span></div></div>
 
 
-<span class="k">def</span> <span class="nf">_create_text</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawable</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_create_text</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawable</span><span class="p">:</span>
+    <span class="k">assert</span> <span class="n">size</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+
     <span class="k">def</span> <span class="nf">_func</span><span class="p">(</span><span class="n">drawing</span><span class="p">:</span> <span class="n">Drawing</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">drawing</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">ForeignObject</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">width</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">height</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)))</span>
+        <span class="n">drawing</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">drawing</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">font_size</span><span class="o">=</span><span class="n">size</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">_func</span>
 
@@ -259,33 +271,49 @@
     <span class="k">return</span> <span class="n">drawing</span>
 
 
-<span class="k">def</span> <span class="nf">_line_to_component</span><span class="p">(</span><span class="n">v_offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">alto</span><span class="o">.</span><span class="n">TextLine</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawable</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_extract_strings_width_sum</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="n">alto</span><span class="o">.</span><span class="n">TextLine</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">([</span><span class="n">str_</span><span class="o">.</span><span class="n">width</span> <span class="k">for</span> <span class="n">str_</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">strings</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">str_</span><span class="p">,</span> <span class="n">alto</span><span class="o">.</span><span class="n">String</span><span class="p">)])</span>
+
+
+<span class="k">def</span> <span class="nf">_guess_font_size</span><span class="p">(</span><span class="n">line</span><span class="p">:</span> <span class="n">alto</span><span class="o">.</span><span class="n">TextLine</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+    <span class="n">strings_width</span> <span class="o">=</span> <span class="n">_extract_strings_width_sum</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">nb_chars</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">extract_strings</span><span class="p">()])</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">strings_width</span> <span class="o">/</span> <span class="p">(</span><span class="n">nb_chars</span> <span class="ow">or</span> <span class="mi">1</span><span class="p">))</span> <span class="o">*</span> <span class="mi">2</span>
+
+
+<span class="k">def</span> <span class="nf">_line_to_component</span><span class="p">(</span><span class="n">h_offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">v_offset</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">line</span><span class="p">:</span> <span class="n">alto</span><span class="o">.</span><span class="n">TextLine</span><span class="p">,</span> <span class="n">font_size</span><span class="p">:</span> <span class="n">FontSize</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawable</span><span class="p">:</span>
     <span class="n">content</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">extract_strings</span><span class="p">())</span>
-    <span class="k">return</span> <span class="n">_create_text</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">hpos</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">vpos</span> <span class="o">+</span> <span class="n">v_offset</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">width</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">height</span><span class="p">))</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">font_size</span><span class="o">.</span><span class="n">max_value</span><span class="p">,</span> <span class="n">_guess_font_size</span><span class="p">(</span><span class="n">line</span><span class="p">))</span> <span class="k">if</span> <span class="n">font_size</span><span class="o">.</span><span class="n">guess</span> <span class="k">else</span> <span class="n">font_size</span><span class="o">.</span><span class="n">default</span>
+    <span class="k">return</span> <span class="n">_create_text</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">hpos</span> <span class="o">+</span> <span class="n">h_offset</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">vpos</span> <span class="o">+</span> <span class="n">v_offset</span> <span class="o">+</span> <span class="n">size</span><span class="p">),</span> <span class="n">size</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_alto_page_to_drawables</span><span class="p">(</span><span class="n">page_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Drawable</span><span class="p">]:</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">_line_to_component</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="n">page_number</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">extract_lines</span><span class="p">()]</span>
+<span class="k">def</span> <span class="nf">_alto_page_to_drawables</span><span class="p">(</span><span class="n">page_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">,</span> <span class="n">font_size</span><span class="p">:</span> <span class="n">FontSize</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Drawable</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">_line_to_component</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">page</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="n">page_number</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">font_size</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">page</span><span class="o">.</span><span class="n">extract_lines</span><span class="p">()]</span>
 
 
-<span class="k">def</span> <span class="nf">_cell_to_drawable</span><span class="p">(</span><span class="n">cell</span><span class="p">:</span> <span class="n">DetectedCell</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawable</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_cell_to_drawable</span><span class="p">(</span><span class="n">cell</span><span class="p">:</span> <span class="n">DetectedCell</span><span class="p">,</span> <span class="n">offset</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">font_size</span><span class="p">:</span> <span class="n">FontSize</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawable</span><span class="p">:</span>
     <span class="n">x_0</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="o">.</span><span class="n">x_0</span>
     <span class="n">x_1</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="o">.</span><span class="n">x_1</span>
     <span class="n">y_0</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="o">.</span><span class="n">y_0</span> <span class="o">+</span> <span class="n">offset</span>
     <span class="n">y_1</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">contour</span><span class="o">.</span><span class="n">y_1</span> <span class="o">+</span> <span class="n">offset</span>
+    <span class="n">text_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">_line_to_component</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">font_size</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">cell</span><span class="o">.</span><span class="n">lines</span><span class="p">]</span>
     <span class="n">drawables</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">_create_line</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">y_0</span><span class="p">),</span>
         <span class="n">_create_line</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">y_1</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">y_1</span><span class="p">),</span>
         <span class="n">_create_line</span><span class="p">(</span><span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">y_1</span><span class="p">),</span>
         <span class="n">_create_line</span><span class="p">(</span><span class="n">x_1</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">x_1</span><span class="p">,</span> <span class="n">y_1</span><span class="p">),</span>
-        <span class="n">_create_text</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">y_0</span><span class="p">,</span> <span class="n">x_1</span> <span class="o">-</span> <span class="n">x_0</span><span class="p">,</span> <span class="n">y_1</span> <span class="o">-</span> <span class="n">y_0</span><span class="p">),</span>
+        <span class="o">*</span><span class="n">text_lines</span><span class="p">,</span>
     <span class="p">]</span>
     <span class="k">return</span> <span class="n">_merge_drawables</span><span class="p">(</span><span class="n">drawables</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_page_and_cells_to_drawables</span><span class="p">(</span><span class="n">page_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">,</span> <span class="n">cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Drawable</span><span class="p">]:</span>
+<span class="k">def</span> <span class="nf">_page_and_cells_to_drawables</span><span class="p">(</span>
+    <span class="n">page_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">page</span><span class="p">:</span> <span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">,</span> <span class="n">cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">],</span> <span class="n">font_size</span><span class="p">:</span> <span class="n">FontSize</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Drawable</span><span class="p">]:</span>
     <span class="n">offset</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="n">page_number</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">_alto_page_to_drawables</span><span class="p">(</span><span class="n">page_number</span><span class="p">,</span> <span class="n">page</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="n">_cell_to_drawable</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">offset</span><span class="p">)</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">cells</span><span class="p">]</span>
+    <span class="n">svg_pages</span> <span class="o">=</span> <span class="n">_alto_page_to_drawables</span><span class="p">(</span><span class="n">page_number</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">font_size</span><span class="p">)</span>
+    <span class="n">svg_cells</span> <span class="o">=</span> <span class="p">[</span><span class="n">_cell_to_drawable</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">font_size</span><span class="p">)</span> <span class="k">for</span> <span class="n">cell</span> <span class="ow">in</span> <span class="n">cells</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">svg_pages</span> <span class="o">+</span> <span class="n">svg_cells</span>
 
 
 <span class="k">def</span> <span class="nf">_image_dimension</span><span class="p">(</span><span class="n">pages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
@@ -299,8 +327,7 @@
 
 
 <span class="k">def</span> <span class="nf">_blank_drawing</span><span class="p">(</span><span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawing</span><span class="p">:</span>
-    <span class="n">base</span> <span class="o">=</span> <span class="n">Drawing</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="s1">&#39;tiny&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">width</span><span class="p">)</span><span class="si">}</span><span class="s1">px&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">)</span><span class="si">}</span><span class="s1">px&#39;</span><span class="p">))</span>
-    <span class="n">base</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">style</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="s1">&#39;div {font-size: 25px;}&#39;</span><span class="p">))</span>
+    <span class="n">base</span> <span class="o">=</span> <span class="n">Drawing</span><span class="p">(</span><span class="n">viewBox</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;0 0 </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">width</span><span class="p">)</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="s1">&#39;tiny&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">base</span>
 
 
@@ -317,7 +344,9 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">background</span><span class="p">]</span> <span class="o">+</span> <span class="n">lines</span>
 
 
-<span class="k">def</span> <span class="nf">_pages_and_cells_to_svg</span><span class="p">(</span><span class="n">pages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">],</span> <span class="n">pages_cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Drawing</span><span class="p">:</span>
+<span class="k">def</span> <span class="nf">_pages_and_cells_to_svg</span><span class="p">(</span>
+    <span class="n">pages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">],</span> <span class="n">pages_cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">]],</span> <span class="n">font_size</span><span class="p">:</span> <span class="n">FontSize</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawing</span><span class="p">:</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">pages_cells</span><span class="p">),</span> <span class="sa">f</span><span class="s1">&#39;Lists have different sizes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span><span class="si">}</span><span class="s1"> and </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pages_cells</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
     <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">_image_dimension</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span>
     <span class="n">blank_drawing</span> <span class="o">=</span> <span class="n">_blank_drawing</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
@@ -325,12 +354,18 @@
     <span class="n">elements</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">element</span>
         <span class="k">for</span> <span class="n">page_number</span><span class="p">,</span> <span class="p">(</span><span class="n">page</span><span class="p">,</span> <span class="n">cells</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">pages</span><span class="p">,</span> <span class="n">pages_cells</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">_page_and_cells_to_drawables</span><span class="p">(</span><span class="n">page_number</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">cells</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">_page_and_cells_to_drawables</span><span class="p">(</span><span class="n">page_number</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">cells</span><span class="p">,</span> <span class="n">font_size</span><span class="p">)</span>
     <span class="p">]</span>
     <span class="k">return</span> <span class="n">_draw_elements</span><span class="p">(</span><span class="n">blank_drawing</span><span class="p">,</span> <span class="n">page_borders</span> <span class="o">+</span> <span class="n">elements</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="alto_pages_and_cells_to_svg"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.alto_to_svg.alto_pages_and_cells_to_svg">[docs]</a><span class="k">def</span> <span class="nf">alto_pages_and_cells_to_svg</span><span class="p">(</span><span class="n">alto_xml_strings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">pages_cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Drawing</span><span class="p">:</span>
+<div class="viewcode-block" id="alto_pages_and_cells_to_svg"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.alto_to_svg.alto_pages_and_cells_to_svg">[docs]</a><span class="k">def</span> <span class="nf">alto_pages_and_cells_to_svg</span><span class="p">(</span>
+    <span class="n">alto_xml_strings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">pages_cells</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">]],</span>
+    <span class="n">default_font_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="n">guess_font_size</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">max_font_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawing</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates an SVG image made of concatenated pages from alto xml files and table cells</span>
 
@@ -340,31 +375,40 @@
 <span class="sd">        alto xml strings</span>
 <span class="sd">    pages_cells</span>
 <span class="sd">        detected cells on each page</span>
+<span class="sd">    default_font_size: int</span>
+<span class="sd">        size of font in output svg</span>
+<span class="sd">    guess_font_size: bool</span>
+<span class="sd">        if True, font size is automatically deduced from block width when possible (to handle varying font sizes)</span>
+<span class="sd">    max_font_size: int</span>
+<span class="sd">        when guess_font_size is True, maximal possible font size is set to max_font_size (to avoid huge font size</span>
+<span class="sd">        in edge cases)</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    svgwrite.Drawing</span>
 <span class="sd">        svg, can be written to file with saveas method</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">alto_pages</span> <span class="o">=</span> <span class="p">[</span><span class="n">_assert_one_page_and_get_it</span><span class="p">(</span><span class="n">alto</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">xml_str</span><span class="p">))</span> <span class="k">for</span> <span class="n">xml_str</span> <span class="ow">in</span> <span class="n">alto_xml_strings</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">_pages_and_cells_to_svg</span><span class="p">(</span><span class="n">alto_pages</span><span class="p">,</span> <span class="n">pages_cells</span><span class="p">)</span></div>
+    <span class="n">alto_pages</span> <span class="o">=</span> <span class="p">[</span><span class="n">assert_one_page_and_get_it</span><span class="p">(</span><span class="n">alto</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">xml_str</span><span class="p">))</span> <span class="k">for</span> <span class="n">xml_str</span> <span class="ow">in</span> <span class="n">alto_xml_strings</span><span class="p">]</span>
+    <span class="n">font_size</span> <span class="o">=</span> <span class="n">FontSize</span><span class="p">(</span><span class="n">default_font_size</span><span class="p">,</span> <span class="n">guess_font_size</span><span class="p">,</span> <span class="n">max_font_size</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_pages_and_cells_to_svg</span><span class="p">(</span><span class="n">alto_pages</span><span class="p">,</span> <span class="n">pages_cells</span><span class="p">,</span> <span class="n">font_size</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">_pages_to_svg</span><span class="p">(</span><span class="n">pages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Drawing</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">_pages_and_cells_to_svg</span><span class="p">(</span><span class="n">pages</span><span class="p">,</span> <span class="p">[[]]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">pages</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">_pages_to_svg</span><span class="p">(</span><span class="n">pages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">],</span> <span class="n">font_size</span><span class="p">:</span> <span class="n">FontSize</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Drawing</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_pages_and_cells_to_svg</span><span class="p">(</span><span class="n">pages</span><span class="p">,</span> <span class="p">[[]]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">pages</span><span class="p">),</span> <span class="n">font_size</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_pages_to_svg_file</span><span class="p">(</span><span class="n">pages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">],</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">drawing</span> <span class="o">=</span> <span class="n">_pages_to_svg</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_pages_to_svg_file</span><span class="p">(</span><span class="n">pages</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">],</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">font_size</span><span class="p">:</span> <span class="n">FontSize</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">drawing</span> <span class="o">=</span> <span class="n">_pages_to_svg</span><span class="p">(</span><span class="n">pages</span><span class="p">,</span> <span class="n">font_size</span><span class="p">)</span>
     <span class="n">drawing</span><span class="o">.</span><span class="n">saveas</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">_assert_one_page_and_get_it</span><span class="p">(</span><span class="n">file_</span><span class="p">:</span> <span class="n">alto</span><span class="o">.</span><span class="n">Alto</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">alto</span><span class="o">.</span><span class="n">Page</span><span class="p">:</span>
-    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">pages</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Expecting 1 page in alto file, got </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">file_</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">pages</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
-    <span class="k">return</span> <span class="n">file_</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">pages</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-
-<div class="viewcode-block" id="alto_to_svg"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.alto_to_svg.alto_to_svg">[docs]</a><span class="k">def</span> <span class="nf">alto_to_svg</span><span class="p">(</span><span class="n">input_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="alto_to_svg"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.alto_to_svg.alto_to_svg">[docs]</a><span class="k">def</span> <span class="nf">alto_to_svg</span><span class="p">(</span>
+    <span class="n">input_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">output_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">default_font_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="n">guess_font_size</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">max_font_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Loads alto xml file and generates an SVG image made of concatenated pages.</span>
 
@@ -374,9 +418,17 @@
 <span class="sd">        Path of the XML alto file</span>
 <span class="sd">    output_filename: str</span>
 <span class="sd">        Path of the output SVG image</span>
+<span class="sd">    default_font_size: int</span>
+<span class="sd">        size of font in output svg</span>
+<span class="sd">    guess_font_size: bool</span>
+<span class="sd">        if True, font size is automatically deduced from block width when possible (to handle varying font sizes)</span>
+<span class="sd">    max_font_size: int</span>
+<span class="sd">        when guess_font_size is True, maximal possible font size is set to max_font_size (to avoid huge font size</span>
+<span class="sd">        in edge cases)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">alto_file</span> <span class="o">=</span> <span class="n">alto</span><span class="o">.</span><span class="n">Alto</span><span class="o">.</span><span class="n">parse_file</span><span class="p">(</span><span class="n">input_filename</span><span class="p">)</span>
-    <span class="n">_pages_to_svg_file</span><span class="p">(</span><span class="n">alto_file</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">pages</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">)</span></div>
+    <span class="n">font_size</span> <span class="o">=</span> <span class="n">FontSize</span><span class="p">(</span><span class="n">default_font_size</span><span class="p">,</span> <span class="n">guess_font_size</span><span class="p">,</span> <span class="n">max_font_size</span><span class="p">)</span>
+    <span class="n">_pages_to_svg_file</span><span class="p">(</span><span class="n">alto_file</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">pages</span><span class="p">,</span> <span class="n">output_filename</span><span class="p">,</span> <span class="n">font_size</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

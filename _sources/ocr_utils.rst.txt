@@ -12,6 +12,14 @@ ocr\_utils.alto\_to\_svg module
    :undoc-members:
    :show-inheritance:
 
+ocr\_utils.commons module
+-------------------------
+
+.. automodule:: ocr_utils.commons
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 ocr\_utils.pdf\_to\_svg module
 ------------------------------
 

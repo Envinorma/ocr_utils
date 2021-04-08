@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>ocr_utils.table &mdash; OCR utils 0.0.4 documentation</title>
+  <title>ocr_utils.table &mdash; OCR utils 0.0.6 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.6
               </div>
             
           
@@ -98,6 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../../ocr_utils.html">ocr_utils package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.alto_to_svg">ocr_utils.alto_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.commons">ocr_utils.commons module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.pdf_to_svg">ocr_utils.pdf_to_svg module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils.table">ocr_utils.table module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../ocr_utils.html#module-ocr_utils">Module contents</a></li>
@@ -178,13 +179,16 @@
            <div itemprop="articleBody">
             
   <h1>Source code for ocr_utils.table</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span>
+<span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Generic</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
 
+<span class="kn">import</span> <span class="nn">alto</span>
 <span class="kn">import</span> <span class="nn">cv2</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pytesseract</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="kn">from</span> <span class="nn">ocr_utils.commons</span> <span class="kn">import</span> <span class="n">assert_one_page_and_get_it</span>
 
 <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s1">&#39;T&#39;</span><span class="p">)</span>
 
@@ -310,7 +314,12 @@
 <div class="viewcode-block" id="DetectedCell"><a class="viewcode-back" href="../../ocr_utils.html#ocr_utils.table.DetectedCell">[docs]</a><span class="nd">@dataclass</span><span class="p">(</span><span class="n">unsafe_hash</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">DetectedCell</span><span class="p">:</span>
     <span class="n">text</span><span class="p">:</span> <span class="nb">str</span>
-    <span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span></div>
+    <span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span>
+    <span class="n">lines</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">alto</span><span class="o">.</span><span class="n">TextLine</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">extract_strings</span><span class="p">())</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">])</span></div>
 
 
 <span class="k">def</span> <span class="nf">_str</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -319,8 +328,23 @@
     <span class="k">return</span> <span class="n">text</span>
 
 
-<span class="k">def</span> <span class="nf">_extract_string</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">return</span> <span class="n">_str</span><span class="p">(</span><span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="n">contour</span><span class="o">.</span><span class="n">y_0</span> <span class="p">:</span> <span class="n">contour</span><span class="o">.</span><span class="n">y_1</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_0</span> <span class="p">:</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_1</span><span class="p">],</span> <span class="n">lang</span><span class="o">=</span><span class="n">lang</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">_truncate</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">img</span><span class="p">[</span><span class="n">contour</span><span class="o">.</span><span class="n">y_0</span> <span class="p">:</span> <span class="n">contour</span><span class="o">.</span><span class="n">y_1</span><span class="p">,</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_0</span> <span class="p">:</span> <span class="n">contour</span><span class="o">.</span><span class="n">x_1</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_string</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">_str</span><span class="p">(</span><span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_string</span><span class="p">(</span><span class="n">_truncate</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">contour</span><span class="p">),</span> <span class="n">lang</span><span class="o">=</span><span class="n">lang</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">_decode</span><span class="p">(</span><span class="n">content</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">content</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)</span> <span class="k">else</span> <span class="n">content</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_lines</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">alto</span><span class="o">.</span><span class="n">TextLine</span><span class="p">]:</span>
+    <span class="n">truncated_image</span> <span class="o">=</span> <span class="n">_truncate</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">contour</span><span class="p">)</span>
+
+    <span class="n">alto_</span> <span class="o">=</span> <span class="n">alto</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">_decode</span><span class="p">(</span><span class="n">pytesseract</span><span class="o">.</span><span class="n">image_to_alto_xml</span><span class="p">(</span><span class="n">truncated_image</span><span class="p">,</span> <span class="n">lang</span><span class="o">=</span><span class="n">lang</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">assert_one_page_and_get_it</span><span class="p">(</span><span class="n">alto_</span><span class="p">)</span><span class="o">.</span><span class="n">extract_lines</span><span class="p">()</span>
 
 
 <span class="k">def</span> <span class="nf">_area</span><span class="p">(</span><span class="n">contour</span><span class="p">:</span> <span class="n">Contour</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -338,8 +362,8 @@
 
 <span class="k">def</span> <span class="nf">_extract_cells</span><span class="p">(</span><span class="n">img</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">lang</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">DetectedCell</span><span class="p">]:</span>
     <span class="n">contours</span> <span class="o">=</span> <span class="n">_extract_contours</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
-    <span class="n">strings</span> <span class="o">=</span> <span class="p">[</span><span class="n">_extract_string</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Parsing table cells.&#39;</span><span class="p">)]</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">DetectedCell</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">contour</span><span class="p">)</span> <span class="k">for</span> <span class="n">text</span><span class="p">,</span> <span class="n">contour</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">strings</span><span class="p">,</span> <span class="n">contours</span><span class="p">))]</span>
+    <span class="n">all_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">_extract_lines</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">ct</span><span class="p">,</span> <span class="n">lang</span><span class="p">)</span> <span class="k">for</span> <span class="n">ct</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">contours</span><span class="p">,</span> <span class="n">leave</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s1">&#39;Parsing table cells.&#39;</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">DetectedCell</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">contour</span><span class="p">,</span> <span class="n">lines</span><span class="p">)</span> <span class="k">for</span> <span class="n">lines</span><span class="p">,</span> <span class="n">contour</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">all_lines</span><span class="p">,</span> <span class="n">contours</span><span class="p">))]</span>
 
 
 <span class="n">_PROXIMITY_THRESHOLD</span> <span class="o">=</span> <span class="mi">10</span>

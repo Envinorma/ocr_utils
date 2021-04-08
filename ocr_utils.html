@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>ocr_utils package &mdash; OCR utils 0.0.4 documentation</title>
+  <title>ocr_utils package &mdash; OCR utils 0.0.6 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.0.4
+                0.0.6
               </div>
             
           
@@ -100,6 +100,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">ocr_utils package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-ocr_utils.alto_to_svg">ocr_utils.alto_to_svg module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-ocr_utils.commons">ocr_utils.commons module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-ocr_utils.pdf_to_svg">ocr_utils.pdf_to_svg module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-ocr_utils.table">ocr_utils.table module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-ocr_utils">Module contents</a></li>
@@ -198,6 +199,27 @@
 <div class="section" id="module-ocr_utils.alto_to_svg">
 <span id="ocr-utils-alto-to-svg-module"></span><h2>ocr_utils.alto_to_svg module<a class="headerlink" href="#module-ocr_utils.alto_to_svg" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
+<dt id="ocr_utils.alto_to_svg.FontSize">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.alto_to_svg.</span></code><code class="sig-name descname"><span class="pre">FontSize</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">guess</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#FontSize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.FontSize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="ocr_utils.alto_to_svg.FontSize.default">
+<code class="sig-name descname"><span class="pre">default</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#ocr_utils.alto_to_svg.FontSize.default" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.alto_to_svg.FontSize.guess">
+<code class="sig-name descname"><span class="pre">guess</span></code><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#ocr_utils.alto_to_svg.FontSize.guess" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.alto_to_svg.FontSize.max_value">
+<code class="sig-name descname"><span class="pre">max_value</span></code><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#ocr_utils.alto_to_svg.FontSize.max_value" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="ocr_utils.alto_to_svg.ForeignObject">
 <em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.alto_to_svg.</span></code><code class="sig-name descname"><span class="pre">ForeignObject</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#ForeignObject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.ForeignObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">svgwrite.base.BaseElement</span></code></p>
@@ -262,13 +284,17 @@
 
 <dl class="py function">
 <dt id="ocr_utils.alto_to_svg.alto_pages_and_cells_to_svg">
-<code class="sig-prename descclassname"><span class="pre">ocr_utils.alto_to_svg.</span></code><code class="sig-name descname"><span class="pre">alto_pages_and_cells_to_svg</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alto_xml_strings</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pages_cells</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.DetectedCell" title="ocr_utils.table.DetectedCell"><span class="pre">ocr_utils.table.DetectedCell</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">svgwrite.drawing.Drawing</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#alto_pages_and_cells_to_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.alto_pages_and_cells_to_svg" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.alto_to_svg.</span></code><code class="sig-name descname"><span class="pre">alto_pages_and_cells_to_svg</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alto_xml_strings</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pages_cells</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#ocr_utils.table.DetectedCell" title="ocr_utils.table.DetectedCell"><span class="pre">ocr_utils.table.DetectedCell</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_font_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">guess_font_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_font_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">svgwrite.drawing.Drawing</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#alto_pages_and_cells_to_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.alto_pages_and_cells_to_svg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generates an SVG image made of concatenated pages from alto xml files and table cells</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>alto_xml_strings</strong> – alto xml strings</p></li>
 <li><p><strong>pages_cells</strong> – detected cells on each page</p></li>
+<li><p><strong>default_font_size</strong> (<em>int</em>) – size of font in output svg</p></li>
+<li><p><strong>guess_font_size</strong> (<em>bool</em>) – if True, font size is automatically deduced from block width when possible (to handle varying font sizes)</p></li>
+<li><p><strong>max_font_size</strong> (<em>int</em>) – when guess_font_size is True, maximal possible font size is set to max_font_size (to avoid huge font size
+in edge cases)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -282,17 +308,29 @@
 
 <dl class="py function">
 <dt id="ocr_utils.alto_to_svg.alto_to_svg">
-<code class="sig-prename descclassname"><span class="pre">ocr_utils.alto_to_svg.</span></code><code class="sig-name descname"><span class="pre">alto_to_svg</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#alto_to_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.alto_to_svg" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.alto_to_svg.</span></code><code class="sig-name descname"><span class="pre">alto_to_svg</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_font_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">guess_font_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_font_size</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/ocr_utils/alto_to_svg.html#alto_to_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.alto_to_svg.alto_to_svg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Loads alto xml file and generates an SVG image made of concatenated pages.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input_filename</strong> (<em>str</em>) – Path of the XML alto file</p></li>
 <li><p><strong>output_filename</strong> (<em>str</em>) – Path of the output SVG image</p></li>
+<li><p><strong>default_font_size</strong> (<em>int</em>) – size of font in output svg</p></li>
+<li><p><strong>guess_font_size</strong> (<em>bool</em>) – if True, font size is automatically deduced from block width when possible (to handle varying font sizes)</p></li>
+<li><p><strong>max_font_size</strong> (<em>int</em>) – when guess_font_size is True, maximal possible font size is set to max_font_size (to avoid huge font size
+in edge cases)</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
+
+</div>
+<div class="section" id="module-ocr_utils.commons">
+<span id="ocr-utils-commons-module"></span><h2>ocr_utils.commons module<a class="headerlink" href="#module-ocr_utils.commons" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="ocr_utils.commons.assert_one_page_and_get_it">
+<code class="sig-prename descclassname"><span class="pre">ocr_utils.commons.</span></code><code class="sig-name descname"><span class="pre">assert_one_page_and_get_it</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">alto.Alto</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">alto.Page</span><a class="reference internal" href="_modules/ocr_utils/commons.html#assert_one_page_and_get_it"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.commons.assert_one_page_and_get_it" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-ocr_utils.pdf_to_svg">
@@ -359,11 +397,16 @@
 
 <dl class="py class">
 <dt id="ocr_utils.table.DetectedCell">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">DetectedCell</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contour</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="#ocr_utils.table.Contour" title="ocr_utils.table.Contour"><span class="pre">ocr_utils.table.Contour</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/table.html#DetectedCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.DetectedCell" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">ocr_utils.table.</span></code><code class="sig-name descname"><span class="pre">DetectedCell</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">text:</span> <span class="pre">str</span></em>, <em class="sig-param"><span class="pre">contour:</span> <span class="pre">ocr_utils.table.Contour</span></em>, <em class="sig-param"><span class="pre">lines:</span> <span class="pre">List[alto.TextLine]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ocr_utils/table.html#DetectedCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#ocr_utils.table.DetectedCell" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt id="ocr_utils.table.DetectedCell.contour">
 <code class="sig-name descname"><span class="pre">contour</span></code><em class="property"><span class="pre">:</span> <a class="reference internal" href="#ocr_utils.table.Contour" title="ocr_utils.table.Contour"><span class="pre">ocr_utils.table.Contour</span></a></em><a class="headerlink" href="#ocr_utils.table.DetectedCell.contour" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="ocr_utils.table.DetectedCell.lines">
+<code class="sig-name descname"><span class="pre">lines</span></code><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">alto.TextLine</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#ocr_utils.table.DetectedCell.lines" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
