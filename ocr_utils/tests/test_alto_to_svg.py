@@ -11,11 +11,13 @@ from svgwrite.shapes import Line, Rect
 
 from ocr_utils.alto_to_svg import (
     Drawable,
+    FontSize,
     _alto_page_to_drawables,
     _create_line,
     _create_rectangle,
     _create_text,
     _draw_elements,
+    _guess_font_size,
     _line_to_component,
     _pages_and_cells_to_svg,
     _pages_to_svg,
@@ -34,14 +36,14 @@ def _draw_and_extract_xml_keys(drawables: List[Drawable]) -> CounterType[str]:
 
 
 def test_create_text():
-    drawable = _create_text('test', 10, 20, 10, 10)
-    assert _draw_and_extract_xml_keys([drawable])['div'] == 1
+    drawable = _create_text('test', 10, 20, 10)
+    assert _draw_and_extract_xml_keys([drawable])['text'] == 1
 
-    drawable = _create_text('test', 10, 10, 10, 10)
-    assert _draw_and_extract_xml_keys([drawable])['div'] == 1
+    drawable = _create_text('test', 10, 10, 10)
+    assert _draw_and_extract_xml_keys([drawable])['text'] == 1
 
-    drawable = _create_text('tt', 5, 119, 10, 10)
-    assert _draw_and_extract_xml_keys([drawable, drawable])['div'] == 2
+    drawable = _create_text('tt', 5, 119, 10)
+    assert _draw_and_extract_xml_keys([drawable, drawable])['text'] == 2
 
 
 def test_create_rectangle():
@@ -85,88 +87,91 @@ def test_draw_elements():
 
 def test_pages_and_cells_to_svg():
     with pytest.raises(ValueError):
-        res = _pages_and_cells_to_svg([], [])
+        res = _pages_and_cells_to_svg([], [], FontSize(50, True, 60))
     with pytest.raises(AssertionError):
         page = alto.Page('', 10, 10, 1, 1, [])
-        res = _pages_and_cells_to_svg([page], [])
+        res = _pages_and_cells_to_svg([page], [], FontSize(50, True, 60))
 
     page = alto.Page('', 20, 10, 1, 1, [])
-    res = _pages_and_cells_to_svg([page], [[]])
-    assert res.attribs['height'] == '20px'
-    assert res.attribs['width'] == '10px'
+    res = _pages_and_cells_to_svg([page], [[]], FontSize(50, True, 60))
+    assert res.attribs['viewBox'] == '0 0 10 20'
+    assert len(res.elements) == 6
+
+    page = alto.Page('', 20, 10, 1, 1, [])
+    res = _pages_and_cells_to_svg([page] * 2, [[]] * 2, FontSize(50, True, 60))
+    assert res.attribs['viewBox'] == '0 0 10 40'
     assert len(res.elements) == 7
 
     page = alto.Page('', 20, 10, 1, 1, [])
-    res = _pages_and_cells_to_svg([page] * 2, [[]] * 2)
-    assert res.attribs['height'] == '40px'
-    assert res.attribs['width'] == '10px'
-    assert len(res.elements) == 8
+    res = _pages_and_cells_to_svg([page] * 4, [[]] * 4, FontSize(50, True, 60))
+    assert res.attribs['viewBox'] == '0 0 10 80'
+    assert len(res.elements) == 9
 
-    page = alto.Page('', 20, 10, 1, 1, [])
-    res = _pages_and_cells_to_svg([page] * 4, [[]] * 4)
-    assert res.attribs['height'] == '80px'
-    assert res.attribs['width'] == '10px'
-    assert len(res.elements) == 10
+
+def test_guess_font_size():
+    assert _guess_font_size(alto.TextLine('0', 10, 10, 10, 10, [])) == 0
+    size = _guess_font_size(alto.TextLine('0', 10, 10, 10, 10, [alto.String('', 5, 20, 0, 0, 'text', 1, [])]))
+    assert size == 10
 
 
 def test_line_to_component():
-    res = _line_to_component(1, alto.TextLine('0', 10, 10, 10, 10, []))
-    assert _draw_and_extract_xml_keys([res])['div'] == 1
+    res = _line_to_component(0, 1, alto.TextLine('0', 10, 10, 10, 10, []), FontSize(50, True, 60))
+    assert _draw_and_extract_xml_keys([res])['text'] == 1
 
-    str_ = alto.String('0', 1, 1, 1, 1, '', 1, [])
-    res = _line_to_component(1, alto.TextLine('0', 10, 10, 10, 10, [str_]))
-    assert _draw_and_extract_xml_keys([res])['div'] == 1
+    str_ = alto.String('0', 1, 1, 1, 1, 'content', 1, [])
+    res = _line_to_component(0, 1, alto.TextLine('0', 10, 10, 10, 10, [str_]), FontSize(50, True, 60))
+    assert _draw_and_extract_xml_keys([res])['text'] == 1
+
+    str_ = alto.String('0', 1, 1, 1, 1, 'content', 1, [])
+    res = _line_to_component(0, 1, alto.TextLine('0', 10, 10, 10, 10, [str_]), FontSize(50, True, 60))
+    assert _draw_and_extract_xml_keys([res])['text'] == 1
 
 
 def test_alto_page_to_drawables():
     page = alto.Page('', 10, 10, 1, 1, [])
-    assert _alto_page_to_drawables(0, page) == []
+    assert _alto_page_to_drawables(0, page, FontSize(50, True, 60)) == []
     line = alto.TextLine('', 1, 1, 1, 1, [alto.String('', 1, 1, 1, 1, 'test', 1, [])])
     block = alto.ComposedBlock('', 1, 1, 1, 1, [alto.TextBlock('', 1, 1, 1, 1, [line])])
     page = alto.Page('', 10, 10, 1, 1, [alto.PrintSpace(1, 1, 1, 1, 1, [block])])
-    assert len(_alto_page_to_drawables(0, page)) == 1
+    assert len(_alto_page_to_drawables(0, page, FontSize(50, True, 60))) == 1
 
 
 def test_pages_to_svg():
     with pytest.raises(ValueError):
-        _pages_to_svg([])
+        _pages_to_svg([], FontSize(50, True, 60))
     page = alto.Page('', 10, 10, 1, 1, [])
-    res = _pages_to_svg([page])
-    assert res.attribs['height'] == '10px'
-    assert res.attribs['width'] == '10px'
-    assert len(res.elements) == 7
+    res = _pages_to_svg([page], FontSize(50, True, 60))
+    assert res.attribs['viewBox'] == '0 0 10 10'
+    assert len(res.elements) == 6
 
     page = alto.Page('', 20, 10, 1, 1, [])
-    res = _pages_to_svg([page])
-    assert res.attribs['height'] == '20px'
-    assert res.attribs['width'] == '10px'
-    assert len(res.elements) == 7
+    res = _pages_to_svg([page], FontSize(50, True, 60))
+    assert res.attribs['viewBox'] == '0 0 10 20'
+    assert len(res.elements) == 6
 
     page = alto.Page('', 20, 10, 1, 1, [])
-    res = _pages_to_svg([page, page])
-    assert res.attribs['height'] == '40px'
-    assert res.attribs['width'] == '10px'
-    assert len(res.elements) == 8
+    res = _pages_to_svg([page, page], FontSize(50, True, 60))
+    assert res.attribs['viewBox'] == '0 0 10 40'
+    assert len(res.elements) == 7
 
     line = alto.TextLine('', 1, 1, 1, 1, [alto.String('', 1, 1, 1, 1, 'test', 1, [])])
     block = alto.ComposedBlock('', 1, 1, 1, 1, [alto.TextBlock('', 1, 1, 1, 1, [line])])
     page = alto.Page('', 10, 10, 1, 1, [alto.PrintSpace(1, 1, 1, 1, 1, [block])])
-    res = _pages_to_svg([page])
-    assert res.attribs['height'] == '10px'
-    assert res.attribs['width'] == '10px'
-    assert len(res.elements) == 8
+    res = _pages_to_svg([page], FontSize(50, True, 60))
+    assert res.attribs['viewBox'] == '0 0 10 10'
+    assert len(res.elements) == 7
 
     with pytest.raises(AssertionError):
         page = alto.Page('', 20, 10, 1, 1, [])
         page_ = alto.Page('', 10, 20, 1, 1, [])
-        res = _pages_to_svg([page, page_])
+        res = _pages_to_svg([page, page_], FontSize(50, True, 60))
 
     with pytest.raises(AssertionError):
         page = alto.Page('', 20, 20, 1, 1, [])
         page_ = alto.Page('', 10, 20, 1, 1, [])
-        res = _pages_to_svg([page, page_])
+        res = _pages_to_svg([page, page_], FontSize(50, True, 60))
 
     with pytest.raises(AssertionError):
         page = alto.Page('', 20, 20, 1, 1, [])
         page_ = alto.Page('', 20, 10, 1, 1, [])
-        res = _pages_to_svg([page, page_])
+        res = _pages_to_svg([page, page_], FontSize(50, True, 60))

@@ -1,5 +1,6 @@
 from typing import List
 
+import alto
 import pytest
 
 from ocr_utils.table import (
@@ -358,3 +359,10 @@ def test_group_cells_2():
                 continue
             for other_cell in group:
                 assert not _are_neighbor(cell, other_cell)
+
+
+def test_detected_cells():
+    res = DetectedCell(
+        '', Contour(1, 1, 1, 1), [alto.TextLine('', 1, 1, 1, 1, [alto.String('', 1, 1, 1, 1, 'test', 1.0, [])])]
+    )
+    assert res.text == 'test'
